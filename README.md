@@ -8,12 +8,34 @@ directement sur Home Assistant OS, sans Docker ni SSH.
 ## Prérequis
 
 - Home Assistant OS (pas HA Core ni HA Container)
-- IP fixe configurée sur la HAOS (Paramètres → Système → Réseau)
+- IP fixe configurée sur la HAOS (voir étape 1 ci-dessous)
 - Accès admin à la box/routeur pour modifier le DHCP
 
 ## Installation
 
-### 1. Ajouter le dépôt
+### 1. Configurer l'IP fixe de la HAOS
+
+L'add-on utilise le réseau hôte (`host_network`), donc il écoute sur l'IP de la HAOS.
+Il faut d'abord lui assigner une IP fixe.
+
+Trouve l'IP actuelle de ta HAOS :
+```
+Paramètres → Système → Réseau → Adapter réseau
+```
+
+Configure une IP fixe (ex: `192.168.1.90`) :
+```
+Paramètres → Système → Réseau → Adapter réseau → Configuration IP
+→ Méthode : Manuel
+→ Adresse IP : 192.168.1.90  (ou l'IP que tu choisis)
+→ Passerelle : 192.168.1.254 (IP de ta box/routeur)
+→ Masque : 255.255.255.0
+```
+
+> **Note :** Dans la suite de ce guide, `<IP_HAOS>` désigne cette IP.
+> Remplace-la par ton IP réelle dans toutes les étapes.
+
+### 2. Ajouter le dépôt
 
 Dans HAOS :
 
@@ -23,13 +45,13 @@ Paramètres → Add-ons → Stores (en bas) → Ajouter un dépôt
 → Créer
 ```
 
-### 2. Installer l'add-on Aldes Bridge
+### 3. Installer l'add-on Aldes Bridge
 
 ```
 Paramètres → Add-ons → Chercher "Aldes Bridge" → Installer
 ```
 
-### 3. Installer l'add-on Dnsmasq (officiel)
+### 4. Installer l'add-on Dnsmasq (officiel)
 
 ```
 Paramètres → Add-ons → Chercher "Dnsmasq" → Installer
@@ -37,7 +59,7 @@ Paramètres → Add-ons → Chercher "Dnsmasq" → Installer
 
 Cet add-on fournit le serveur DNS qui redirige le domaine Aldes vers le bridge.
 
-### 4. Configurer Dnsmasq
+### 5. Configurer Dnsmasq
 
 Ouvrir l'onglet **Configuration** de l'add-on Dnsmasq et remplacer le contenu par :
 
@@ -47,44 +69,47 @@ defaults:
 
 hosts:
   - host: aldesiotsuite.azure-devices.net
-    ip: 192.168.1.90        # IP fixe de ta HAOS
+    ip: <IP_HAOS>           # <-- remplace par l'IP de ta HAOS
 
 log_queries: true
 cache_size: 1000
 ```
 
+> **Important :** `<IP_HAOS>` doit être remplacé par l'IP fixe configurée à l'étape 1.
+> Par exemple, si ta HAOS a l'IP `192.168.1.90`, mets `ip: 192.168.1.90`.
+
 Puis **Démarrer** l'add-on et activer le démarrage automatique.
 
-### 5. Configurer le DHCP
+### 6. Configurer le DHCP
 
 Dans l'admin de ta box/routeur :
 
 ```
 DHCP du réseau local
-→ DNS 1 = 192.168.1.90  (IP de la HAOS)
-→ DNS 2 = 192.168.1.254 (upstream, backup)
+→ DNS 1 = <IP_HAOS>        # l'IP fixe de ta HAOS
+→ DNS 2 = 192.168.1.254    # upstream, backup
 → Appliquer
 ```
 
 Les appareils qui se connecteront au réseau recevront l'IP de la HAOS comme serveur DNS.
 
-### 6. Vérifier
+### 7. Vérifier
 
 ```bash
-# Depuis un PC du réseau
-dig @192.168.1.90 aldesiotsuite.azure-devices.net +short
-# → 192.168.1.90 ✓
+# Depuis un PC du réseau (remplace <IP_HAOS> par ton IP)
+dig @<IP_HAOS> aldesiotsuite.azure-devices.net +short
+# → <IP_HAOS> ✓
 
-dig @192.168.1.90 github.com +short
+dig @<IP_HAOS> github.com +short
 # → IP publique normale ✓
 ```
 
-### 7. Connecter la box Aldes
+### 8. Connecter la box Aldes
 
 Redémarre la box Aldes. Elle résoudra `aldesiotsuite.azure-devices.net` vers la HAOS
 et se connectera sur le port 8883.
 
-La Web UI est accessible sur `http://192.168.1.90:8080`.
+La Web UI est accessible sur `http://<IP_HAOS>:8080`.
 
 ## Configuration de l'add-on Aldes Bridge
 
@@ -126,6 +151,7 @@ Navigateur ──HTTP:8080────→ HAOS (aldes-bridge) → Web UI
 ```
 
 - **aldes-bridge** : bridge MQTT/TLS + API + Web UI, tourne en `host_network`
+  (écoute sur l'IP de la HAOS, ports 8883 et 8080)
 - **dnsmasq** : résout `aldesiotsuite.azure-devices.net` vers l'IP de la HAOS,
   relaie le reste vers le DNS upstream
 
@@ -145,11 +171,11 @@ Les données sont sauvegardées dans `/config/aldes/` (volume HAOS) :
 
 **La Web UI ne répond pas :**
 - Vérifier que l'add-on Aldes Bridge est démarré
-- `curl http://192.168.1.90:8080/api/config`
+- `curl http://<IP_HAOS>:8080/api/config`
 
 **La box Aldes ne se connecte pas :**
-- Vérifier que dnsmasq tourne : `dig @192.168.1.90 aldesiotsuite.azure-devices.net`
-- Vérifier le DHCP : les appareils doivent recevoir `192.168.1.90` comme DNS
+- Vérifier que dnsmasq tourne : `dig @<IP_HAOS> aldesiotsuite.azure-devices.net`
+- Vérifier le DHCP : les appareils doivent recevoir `<IP_HAOS>` comme DNS
 - Vérifier les logs de l'add-on Aldes Bridge
 
 **Le DNS de la HAOS ne fonctionne plus :**
