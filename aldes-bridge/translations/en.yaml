@@ -1,0 +1,14 @@
+---
+configuration:
+  mode:
+    name: Mode
+    description: Mode de fonctionnement du bridge
+  profile:
+    name: Profil
+    description: Profil device Aldes
+  history_days:
+    name: Rétention historique
+    description: Nombre de jours de rétention de l'historique SQLite
+  box_tz:
+    name: Timezone box
+    description: Timezone de la box Aldes pour la conversion des timestamps
