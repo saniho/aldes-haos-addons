@@ -1,15 +1,31 @@
-FROM ghcr.io/saniho/aldes-bridge:0.4.0
+# Stage 1 : build du frontend React depuis le repo principal
+FROM node:20-alpine AS web
+RUN apk add --no-cache git
+RUN git clone --depth 1 --branch v0.4.0 https://github.com/saniho/aldes-bridge.git /src
+WORKDIR /src/web
+RUN npm ci --no-audit --no-fund && npm run build
+
+# Stage 2 : runtime python
+FROM python:3.11-slim
+WORKDIR /app
+ENV PYTHONUNBUFFERED=1
+ENV ALDES_WEB_DIR=/app/dist
+
+# Copie depuis le clone du repo principal
+COPY --from=web /src/requirements.txt ./requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+COPY --from=web /src/server/ ./server/
+COPY --from=web /src/profiles/ ./profiles/
+COPY --from=web /src/web/dist ./dist
 
 RUN mkdir -p /config/aldes
 
-# Redirige les fichiers persistants vers le volume HAOS (/config)
+EXPOSE 8883 8080
+
 ENV ALDES_CONFIG_FILE=/config/aldes/config.json
 ENV ALDES_TELEMETRY_FILE=/config/aldes/telemetry.json
 ENV ALDES_HISTORY_FILE=/config/aldes/history.db
 ENV ALDES_PROFILE_FILE=/config/aldes/profile.json
 ENV ALDES_CONSIGNE_FILE=/config/aldes/consigne.json
 
-# Note : le mode (mode.json) et le log (events.log.jsonl) sont hardcodés
-# dans le code source (pas d'env var). Le mode est initialisé via ALDES_MODE
-# et persisté/relu depuis APP_ROOT/logs/mode.json (éphemère dans HAOS, acceptable).
-# Le log est non-critique et tournant.
+ENTRYPOINT ["python3", "-m", "server.main"]
