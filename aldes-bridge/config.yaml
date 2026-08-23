@@ -22,12 +22,14 @@ map:
   - config:rw
 options:
   mqtt_port: 18883
+  box_ip: ""
   mode: bridge
   profile: tone-aquaair
   history_days: 90
   box_tz: Europe/Paris
 schema:
   mqtt_port: int
+  box_ip: str
   mode: list(bridge|proxy|listen|raw)
   profile: str
   history_days: int

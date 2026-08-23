@@ -125,6 +125,7 @@ La Web UI est accessible sur `http://<IP_HAOS>:8080` ou via le bouton
 | Option | Description | Défaut |
 |--------|-------------|--------|
 | `mqtt_port` | Port MQTT/TLS du bridge | `18883` |
+| `box_ip` | IP de la box Aldes (filtrage iptables) | `""` (toutes sources) |
 | `mode` | Mode de fonctionnement (`bridge`, `proxy`, `listen`, `raw`) | `bridge` |
 | `profile` | Profil device Aldes | `tone-aquaair` |
 | `history_days` | Rétention de l'historique SQLite (jours) | `90` |
@@ -138,8 +139,12 @@ Le port par défaut est **18883** pour éviter les conflits avec d'autres servic
 
 > **Important :** la box Aldes se connecte sur le port **8883** (hardcodé dans
 > son firmware). L'add-on utilise `iptables` pour rediriger automatiquement le
-> trafic du port 8883 vers le port configuré. La box se connecte sur le 8883,
-> le trafic est redirigé vers 18883 (ou le port choisi), et tout fonctionne.
+> trafic du port 8883 vers le port configuré.
+>
+> Si tu as déjà un broker MQTT (ex: Mosquitto) sur le port 8883, configure
+> l'option **`box_ip`** avec l'IP de ta box Aldes. La redirection ne s'appliquera
+> alors qu'aux connexions venant de cette IP, et ton Mosquitto continuera de
+> servir les autres clients sur le 8883.
 >
 > Cette redirection nécessite la capability `NET_ADMIN` (inclus dans la config
 > de l'add-on). Le container installe aussi `iptables` au build.
