@@ -14,16 +14,18 @@ webui: http://[HOST]:[PORT:8080]/
 panel_icon: mdi:thermometer
 panel_title: Aldes Bridge
 ports:
-  "8883/tcp": 8883
+  "18883/tcp": 18883
   "8080/tcp": 8080
 map:
   - config:rw
 options:
+  mqtt_port: 18883
   mode: bridge
   profile: tone-aquaair
   history_days: 90
   box_tz: Europe/Paris
 schema:
+  mqtt_port: int
   mode: list(bridge|proxy|listen|raw)
   profile: str
   history_days: int

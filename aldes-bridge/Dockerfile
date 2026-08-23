@@ -11,7 +11,6 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV ALDES_WEB_DIR=/app/dist
 
-# Copie depuis le clone du repo principal
 COPY --from=web /src/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 COPY --from=web /src/server/ ./server/
@@ -20,7 +19,10 @@ COPY --from=web /src/web/dist ./dist
 
 RUN mkdir -p /config/aldes
 
-EXPOSE 8883 8080
+COPY run.sh /run.sh
+RUN chmod +x /run.sh
+
+EXPOSE 18883 8080
 
 ENV ALDES_CONFIG_FILE=/config/aldes/config.json
 ENV ALDES_TELEMETRY_FILE=/config/aldes/telemetry.json
@@ -28,4 +30,4 @@ ENV ALDES_HISTORY_FILE=/config/aldes/history.db
 ENV ALDES_PROFILE_FILE=/config/aldes/profile.json
 ENV ALDES_CONSIGNE_FILE=/config/aldes/consigne.json
 
-ENTRYPOINT ["python3", "-m", "server.main"]
+ENTRYPOINT ["/run.sh"]
