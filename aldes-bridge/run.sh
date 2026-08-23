@@ -15,12 +15,21 @@ if [ "$MQTT_PORT" != "8883" ]; then
   if [ -n "$BOX_IP" ]; then
     iptables -t nat -A PREROUTING -p tcp -s "$BOX_IP" --dport 8883 -j REDIRECT --to-port "$MQTT_PORT" 2>/dev/null
     ip6tables -t nat -A PREROUTING -p tcp -s "$BOX_IP" --dport 8883 -j REDIRECT --to-port "$MQTT_PORT" 2>/dev/null
-    echo "[run.sh] iptables: 8883 -> $MQTT_PORT (source: $BOX_IP only)"
+    echo "[run.sh] iptables PREROUTING: 8883 -> $MQTT_PORT (source: $BOX_IP only)"
   else
     iptables -t nat -A PREROUTING -p tcp --dport 8883 -j REDIRECT --to-port "$MQTT_PORT" 2>/dev/null
     ip6tables -t nat -A PREROUTING -p tcp --dport 8883 -j REDIRECT --to-port "$MQTT_PORT" 2>/dev/null
-    echo "[run.sh] iptables: 8883 -> $MQTT_PORT (all sources)"
+    echo "[run.sh] iptables PREROUTING: 8883 -> $MQTT_PORT (all sources)"
   fi
+  # PREROUTING ne catche pas le trafic depuis la HAOS elle-meme.
+  # Ajoute aussi OUTPUT pour que le redirect fonctionne si la box
+  # est sur le meme sous-reseau (trafic "local" vu par le noyau).
+  if [ -n "$BOX_IP" ]; then
+    iptables -t nat -A OUTPUT -p tcp -s "$BOX_IP" --dport 8883 -j REDIRECT --to-port "$MQTT_PORT" 2>/dev/null
+  else
+    iptables -t nat -A OUTPUT -p tcp --dport 8883 -j REDIRECT --to-port "$MQTT_PORT" 2>/dev/null
+  fi
+  echo "[run.sh] iptables OUTPUT: 8883 -> $MQTT_PORT (local traffic)"
 fi
 
 echo "[run.sh] Starting FastAPI on port $WEB_PORT, MQTT on port $MQTT_PORT"
