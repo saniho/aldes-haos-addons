@@ -24,7 +24,12 @@ if [ "$MQTT_PORT" != "8883" ]; then
 fi
 
 # Start nginx for HAOS ingress (port 8099 -> 8080)
-nginx &
-echo "[run.sh] nginx started on port 8099 -> $WEB_PORT"
+nginx -g 'daemon off;' &
+sleep 1
+if nginx -t 2>/dev/null; then
+  echo "[run.sh] nginx started on port 8099 -> $WEB_PORT"
+else
+  echo "[run.sh] WARNING: nginx config test failed, ingress may not work"
+fi
 
 exec python3 -m server.main --mqtt-port "$MQTT_PORT" --web-port "$WEB_PORT"
