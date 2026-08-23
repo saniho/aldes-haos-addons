@@ -37,6 +37,9 @@ Paramètres → Système → Réseau → Adapter réseau → Configuration IP
 
 ### 2. Ajouter le dépôt
 
+> **Attention :** ceci est un dépôt d'**add-ons** (containers), pas HACS.
+> Ne pas ajouter dans HACS (qui est pour les intégrations, cards et thèmes).
+
 Dans HAOS :
 
 ```
