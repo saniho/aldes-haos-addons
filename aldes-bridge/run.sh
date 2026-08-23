@@ -54,13 +54,4 @@ else
 fi
 
 echo "[run.sh] Starting FastAPI on port $WEB_PORT, MQTT on port $MQTT_PORT"
-
-# Lance tcpdump en arriere-plan pour capturer le trafic sur le port 8883
-# pendant 60 secondes, puis affiche les resultats
-tcpdump -i any port 8883 -c 50 -nn -l 2>/tmp/tcpdump_mqtt.log &
-TCPDUMP_PID=$!
-echo "[run.sh] tcpdump PID=$TCPDUMP_PID (capturing port 8883 for 60s)"
-
-(sleep 60 && kill $TCPDUMP_PID 2>/dev/null; echo "[run.sh] --- tcpdump results ---"; cat /tmp/tcpdump_mqtt.log 2>/dev/null || echo "no captures") &
-
 exec python3 -m server.main --mqtt-port "$MQTT_PORT" --web-port "$WEB_PORT"

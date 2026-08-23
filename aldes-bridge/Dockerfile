@@ -14,7 +14,6 @@ ENV ALDES_WEB_DIR=/app/dist
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     iptables \
-    tcpdump \
     net-tools \
     && rm -rf /var/lib/apt/lists/*
 
