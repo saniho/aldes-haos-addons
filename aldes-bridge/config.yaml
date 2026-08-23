@@ -10,6 +10,9 @@ arch:
   - armv7
 init: false
 host_network: true
+webui: http://[HOST]:[PORT:8080]/
+panel_icon: mdi:thermometer
+panel_title: Aldes Bridge
 ports:
   "8883/tcp": 8883
   "8080/tcp": 8080
