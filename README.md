@@ -137,17 +137,15 @@ Le mode peut être changé à tout moment depuis la Web UI.
 Le port par défaut est **18883** pour éviter les conflits avec d'autres services.
 
 > **Important :** la box Aldes se connecte sur le port **8883** (hardcodé dans
-> son firmware). Si tu utilises les modes `bridge`, `proxy` ou `listen`, tu
-> **dois** garder le port 8883. Change le uniquement si le 8883 est déjà utilisé
-> par un autre service et que tu sais ce que tu fais.
+> son firmware). L'add-on utilise `iptables` pour rediriger automatiquement le
+> trafic du port 8883 vers le port configuré. La box se connecte sur le 8883,
+> le trafic est redirigé vers 18883 (ou le port choisi), et tout fonctionne.
 >
-> Le port configurable est surtout utile pour le mode `raw` (broker MQTT local)
-> où la box n'est pas connectée directement au bridge.
+> Cette redirection nécessite la capability `NET_ADMIN` (inclus dans la config
+> de l'add-on). Le container installe aussi `iptables` au build.
 
-Si le port 8883 est occupé, vérifie ce qui l'utilise :
-```
-Paramètres → Système → Réseau → Informations réseau
-```
+Pour changer le port MQTT, modifie l'option `mqtt_port` dans la config de l'add-on.
+La redirection iptables s'ajuste automatiquement.
 
 ## Mise à jour
 
@@ -207,10 +205,10 @@ Les données sont sauvegardées dans `/config/aldes/` (volume HAOS) :
 - Vérifier les logs de l'add-on Aldes Bridge
 
 **"Address already in use" sur le port 8883 :**
-- Un autre service utilise le port 8883. Vérifie dans
-  `Paramètres → Système → Réseau → Informations réseau`
-- Change le port MQTT dans la config de l'add-on (attention : la box Aldes
-  ne fonctionne qu'avec le port 8883)
+- Ce n'est plus un problème : l'add-on utilise `iptables` pour rediriger
+  automatiquement le trafic du port 8883 vers le port configuré (défaut: 18883)
+- Le port 8883 peut continuer à être utilisé par un autre service, la box
+  Aldes se connectera quand même correctement
 
 **Le DNS de la HAOS ne fonctionne plus :**
 - Vérifier que dnsmasq relaye vers l'upstream (`defaults: [192.168.1.254]`)

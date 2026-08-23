@@ -11,6 +11,8 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV ALDES_WEB_DIR=/app/dist
 
+RUN apt-get update && apt-get install -y --no-install-recommends iptables && rm -rf /var/lib/apt/lists/*
+
 COPY --from=web /src/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 COPY --from=web /src/server/ ./server/
