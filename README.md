@@ -81,6 +81,11 @@ cache_size: 1000
 > **Important :** `<IP_HAOS>` doit être remplacé par l'IP fixe configurée à l'étape 1.
 > Par exemple, si ta HAOS a l'IP `192.168.1.90`, mets `ip: 192.168.1.90`.
 
+> **Ce que fait dnsmasq :** il résout `aldesiotsuite.azure-devices.net` vers l'IP
+> de ta HAOS. Toutes les autres requêtes DNS sont relayées vers ton DNS upstream
+> (ta box/routeur). Le port MQTT (8883 ou 18883) n'intervient pas ici — dnsmasq
+> gère uniquement la résolution de noms.
+
 Puis **Démarrer** l'add-on et activer le démarrage automatique.
 
 ### 6. Configurer le DHCP
@@ -112,12 +117,14 @@ dig @<IP_HAOS> github.com +short
 Redémarre la box Aldes. Elle résoudra `aldesiotsuite.azure-devices.net` vers la HAOS
 et se connectera sur le port 8883.
 
-La Web UI est accessible sur `http://<IP_HAOS>:8080`.
+La Web UI est accessible sur `http://<IP_HAOS>:8080` ou via le bouton
+**"Open Web UI"** dans la page de l'add-on.
 
 ## Configuration de l'add-on Aldes Bridge
 
 | Option | Description | Défaut |
 |--------|-------------|--------|
+| `mqtt_port` | Port MQTT/TLS du bridge | `18883` |
 | `mode` | Mode de fonctionnement (`bridge`, `proxy`, `listen`, `raw`) | `bridge` |
 | `profile` | Profil device Aldes | `tone-aquaair` |
 | `history_days` | Rétention de l'historique SQLite (jours) | `90` |
@@ -125,15 +132,32 @@ La Web UI est accessible sur `http://<IP_HAOS>:8080`.
 
 Le mode peut être changé à tout moment depuis la Web UI.
 
+### Port MQTT
+
+Le port par défaut est **18883** pour éviter les conflits avec d'autres services.
+
+> **Important :** la box Aldes se connecte sur le port **8883** (hardcodé dans
+> son firmware). Si tu utilises les modes `bridge`, `proxy` ou `listen`, tu
+> **dois** garder le port 8883. Change le uniquement si le 8883 est déjà utilisé
+> par un autre service et que tu sais ce que tu fais.
+>
+> Le port configurable est surtout utile pour le mode `raw` (broker MQTT local)
+> où la box n'est pas connectée directement au bridge.
+
+Si le port 8883 est occupé, vérifie ce qui l'utilise :
+```
+Paramètres → Système → Réseau → Informations réseau
+```
+
 ## Mise à jour
 
 ### Add-on Aldes Bridge
 
 Quand une nouvelle version du bridge est publiée sur le repo principal,
-mettre à jour le tag dans `aldes-bridge/Dockerfile` :
+mettre à jour la branche dans `aldes-bridge/Dockerfile` :
 
 ```dockerfile
-FROM ghcr.io/saniho/aldes-bridge:X.Y.Z
+RUN git clone --depth 1 --branch <branche> https://github.com/saniho/aldes-bridge.git /src
 ```
 
 Pousser sur GitHub, puis dans HAOS :
@@ -154,9 +178,9 @@ Navigateur ──HTTP:8080────→ HAOS (aldes-bridge) → Web UI
 ```
 
 - **aldes-bridge** : bridge MQTT/TLS + API + Web UI, tourne en `host_network`
-  (écoute sur l'IP de la HAOS, ports 8883 et 8080)
+  (écoute sur l'IP de la HAOS, port MQTT configurable, port HTTP 8080)
 - **dnsmasq** : résout `aldesiotsuite.azure-devices.net` vers l'IP de la HAOS,
-  relaie le reste vers le DNS upstream
+  relaie le reste vers le DNS upstream. N'intervient pas sur les ports MQTT.
 
 ## Fichiers persistants
 
@@ -177,9 +201,16 @@ Les données sont sauvegardées dans `/config/aldes/` (volume HAOS) :
 - `curl http://<IP_HAOS>:8080/api/config`
 
 **La box Aldes ne se connecte pas :**
+- Vérifier que le port MQTT est bien **8883** (config de l'add-on)
 - Vérifier que dnsmasq tourne : `dig @<IP_HAOS> aldesiotsuite.azure-devices.net`
 - Vérifier le DHCP : les appareils doivent recevoir `<IP_HAOS>` comme DNS
 - Vérifier les logs de l'add-on Aldes Bridge
+
+**"Address already in use" sur le port 8883 :**
+- Un autre service utilise le port 8883. Vérifie dans
+  `Paramètres → Système → Réseau → Informations réseau`
+- Change le port MQTT dans la config de l'add-on (attention : la box Aldes
+  ne fonctionne qu'avec le port 8883)
 
 **Le DNS de la HAOS ne fonctionne plus :**
 - Vérifier que dnsmasq relaye vers l'upstream (`defaults: [192.168.1.254]`)
