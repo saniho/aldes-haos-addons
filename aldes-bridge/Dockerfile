@@ -14,7 +14,6 @@ ENV ALDES_WEB_DIR=/app/dist
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     iptables \
-    nginx \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=web /src/requirements.txt ./requirements.txt
@@ -25,11 +24,10 @@ COPY --from=web /src/web/dist ./dist
 
 RUN mkdir -p /config/aldes
 
-COPY nginx-ingress.conf /etc/nginx/nginx.conf
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
-EXPOSE 18883 8080 8099
+EXPOSE 18883 8080
 
 ENV ALDES_CONFIG_FILE=/config/aldes/config.json
 ENV ALDES_TELEMETRY_FILE=/config/aldes/telemetry.json
