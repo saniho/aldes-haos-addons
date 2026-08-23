@@ -117,8 +117,8 @@ dig @<IP_HAOS> github.com +short
 Redémarre la box Aldes. Elle résoudra `aldesiotsuite.azure-devices.net` vers la HAOS
 et se connectera sur le port 8883.
 
-La Web UI est accessible sur `http://<IP_HAOS>:8080` ou via le bouton
-**"Open Web UI"** dans la page de l'add-on.
+La Web UI est accessible via le bouton **"Open Web UI"** dans la page de l'add-on,
+ou directement dans la barre latérale de Home Assistant (panel Aldes Bridge).
 
 ## Configuration de l'add-on Aldes Bridge
 
