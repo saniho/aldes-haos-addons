@@ -152,6 +152,18 @@ Le port par défaut est **18883** pour éviter les conflits avec d'autres servic
 Pour changer le port MQTT, modifie l'option `mqtt_port` dans la config de l'add-on.
 La redirection iptables s'ajuste automatiquement.
 
+**Exemple avec Mosquitto déjà installé :**
+
+Si tu as Mosquitto sur le port 8883 pour d'autres usages, mets l'IP de la box Aldes
+dans `box_ip` :
+
+```
+Box Aldes (192.168.1.50) → 8883 → iptables → 18883 → aldes-bridge ✓
+Autres clients            → 8883 → Mosquitto (normal) ✓
+```
+
+Pour trouver l'IP de la box Aldes : routeur → DHCP → appareils connectés.
+
 ## Mise à jour
 
 ### Add-on Aldes Bridge
