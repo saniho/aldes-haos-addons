@@ -130,7 +130,7 @@ ou directement dans la barre latérale de Home Assistant (panel Aldes Bridge).
 |--------|-------------|--------|
 | `mqtt_port` | Port MQTT/TLS du bridge | `18883` |
 | `box_ip` | IP de la box Aldes (filtrage iptables) | `""` (toutes sources) |
-| `mode` | Mode de fonctionnement (`bridge`, `proxy`, `listen`, `raw`) | `bridge` |
+| `mode` | Mode de fonctionnement (`bridge`, `proxy`) | `bridge` |
 | `profile` | Profil device Aldes | `tone-aquaair` |
 | `history_days` | Rétention de l'historique SQLite (jours) | `90` |
 | `box_tz` | Timezone de la box Aldes | `Europe/Paris` |
