@@ -1,6 +1,6 @@
 # Stage 1 : build du frontend React depuis le repo principal
 FROM node:20-alpine AS web
-ARG CACHEBUST=8
+ARG CACHEBUST=9
 RUN echo "Cache bust: $CACHEBUST" && date
 RUN apk add --no-cache git
 RUN git clone --depth 1 --branch feature/device-profiles https://github.com/saniho/aldes-bridge.git /src
