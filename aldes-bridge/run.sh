@@ -2,12 +2,15 @@
 MQTT_PORT=18883
 WEB_PORT=8080
 BOX_IP=""
+MODE=""
 
 if [ -f /data/options.json ]; then
   val=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('mqtt_port',''))" 2>/dev/null)
   [ -n "$val" ] && MQTT_PORT=$val
   bip=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('box_ip',''))" 2>/dev/null)
   [ -n "$bip" ] && BOX_IP=$bip
+  md=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('mode',''))" 2>/dev/null)
+  [ -n "$md" ] && MODE=$md
 fi
 
 echo "[run.sh] MQTT_PORT=$MQTT_PORT, WEB_PORT=$WEB_PORT, BOX_IP=$BOX_IP"
@@ -53,5 +56,12 @@ else
   echo "[run.sh] MQTT port is already 8883, no redirect needed"
 fi
 
-echo "[run.sh] Starting FastAPI on port $WEB_PORT, MQTT on port $MQTT_PORT"
-exec python3 -m server.main --mqtt-port "$MQTT_PORT" --web-port "$WEB_PORT"
+echo "[run.sh] Starting FastAPI on port $WEB_PORT, MQTT on port $MQTT_PORT, mode=$MODE"
+MODE_ARG=""
+if [ -n "$MODE" ]; then
+  MODE_ARG="--mode $MODE"
+  # Ecrire le mode dans le fichier de persistance pour que le serveur le prenne en compte
+  mkdir -p /app/logs
+  echo "{\"mode\": \"$MODE\"}" > /app/logs/mode.json
+fi
+exec python3 -m server.main --mqtt-port "$MQTT_PORT" --web-port "$WEB_PORT" $MODE_ARG
