@@ -32,26 +32,29 @@ nft list ruleset 2>/dev/null | head -5 || echo "  nft not available or no permis
 
 # Redirige le port 8883 vers le port MQTT si besoin
 # IMPORTANT: on utilise -I (insert) au lieu de -A (append) pour placer
-# la règle AVANT la chaîne DOCKER qui intercepte tout le trafic local.
+# la regle AVANT la chaine DOCKER qui intercepte tout le trafic local.
 if [ "$MQTT_PORT" != "8883" ]; then
+  # Supprimer TOUTES les anciennes regles REDIRECT 8883->* (accumulees a chaque restart)
+  for chain in PREROUTING OUTPUT; do
+    while iptables -t nat -D "$chain" -p tcp --dport 8883 -j REDIRECT --to-port 18883 2>/dev/null; do :; done
+    while iptables -t nat -D "$chain" -p tcp --dport 8883 -j REDIRECT --to-port 8080 2>/dev/null; do :; done
+    while iptables -t nat -D "$chain" -p tcp -s "$BOX_IP" --dport 8883 -j REDIRECT --to-port 18883 2>/dev/null; do :; done
+  done
+  echo "[run.sh] iptables: all old 8883 REDIRECT rules cleaned"
+
+  # Ajouter UNIQUEMENT la regle PREROUTING (trafic ENTRANT de la box)
   if [ -n "$BOX_IP" ]; then
     iptables -t nat -I PREROUTING 1 -p tcp -s "$BOX_IP" --dport 8883 -j REDIRECT --to-port "$MQTT_PORT" 2>&1
-    ip6tables -t nat -I PREROUTING 1 -p tcp -s "$BOX_IP" --dport 8883 -j REDIRECT --to-port "$MQTT_PORT" 2>&1
     echo "[run.sh] iptables PREROUTING: 8883 -> $MQTT_PORT (source: $BOX_IP only)"
   else
     iptables -t nat -I PREROUTING 1 -p tcp --dport 8883 -j REDIRECT --to-port "$MQTT_PORT" 2>&1
-    ip6tables -t nat -I PREROUTING 1 -p tcp --dport 8883 -j REDIRECT --to-port "$MQTT_PORT" 2>&1
     echo "[run.sh] iptables PREROUTING: 8883 -> $MQTT_PORT (all sources)"
   fi
-  if [ -n "$BOX_IP" ]; then
-    iptables -t nat -I OUTPUT 1 -p tcp -s "$BOX_IP" --dport 8883 -j REDIRECT --to-port "$MQTT_PORT" 2>&1
-  else
-    iptables -t nat -I OUTPUT 1 -p tcp --dport 8883 -j REDIRECT --to-port "$MQTT_PORT" 2>&1
-  fi
-  echo "[run.sh] iptables OUTPUT: 8883 -> $MQTT_PORT (local traffic)"
+  # PAS de regle OUTPUT : la connexion sortante bridge->Azure ne doit PAS etre redirigee
 
   echo "[run.sh] --- Verif iptables after apply ---"
   iptables -t nat -L PREROUTING -n -v 2>&1 | head -10 || true
+  iptables -t nat -L OUTPUT -n -v 2>&1 | head -10 || true
 else
   echo "[run.sh] MQTT port is already 8883, no redirect needed"
 fi
