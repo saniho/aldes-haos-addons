@@ -1,6 +1,10 @@
 # Aldes HAOS Add-ons
 
+**Mainteneur :** [saniho](https://github.com/saniho)
+
 Add-ons Home Assistant OS pour le [Aldes Bridge](https://github.com/saniho/aldes-bridge).
+
+> ⚠️ **Avis de non-responsabilité :** ce projet est un projet indépendant et sans aucun lien avec Aldes. Il n'est ni approuvé, ni sponsorisé, ni affilié à Aldes ou à ses filiales. Il est fourni « en l'état » et utilisé à vos propres risques : aucun support, aucune garantie. L'usage de ce pont peut perturber le fonctionnement normal de votre équipement Aldes (et potentiellement le cloud Aldes) — assurez-vous de comprendre les risques avant de l'utiliser.
 
 Ce repo fournit un add-on HAOS qui déploie le bridge MQTT/TLS pour Aldes T.ONE AquaAir
 directement sur Home Assistant OS, sans Docker ni SSH.
