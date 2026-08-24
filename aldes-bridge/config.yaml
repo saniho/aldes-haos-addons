@@ -32,7 +32,7 @@ options:
 schema:
   mqtt_port: int
   box_ip: str
-  mode: list(bridge|proxy|listen|raw)
+  mode: list(bridge|proxy)
   profile: str
   history_days: int
   box_tz: str
