@@ -197,6 +197,10 @@ Navigateur ──HTTP:8080────→ HAOS (aldes-bridge) → Web UI
 - **dnsmasq** : résout `aldesiotsuite.azure-devices.net` vers l'IP de la HAOS,
   relaie le reste vers le DNS upstream. N'intervient pas sur les ports MQTT.
 
+> 📖 **Détails réseau** (iptables, DoH, topologie) : voir la section
+> [Réseau (Home Assistant OS)](https://github.com/saniho/aldes-bridge#réseau-home-assistant-os)
+> dans le README principal.
+
 ## Fichiers persistants
 
 Les données sont sauvegardées dans `/config/aldes/` (volume HAOS) :
