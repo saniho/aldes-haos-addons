@@ -1,6 +1,6 @@
 ---
 name: Aldes Bridge
-version: "0.5.10"
+version: "0.5.11"
 slug: aldes_bridge
 description: Bridge MQTT/TLS pour Aldes T.ONE AquaAir — intercepte et contrôle la PAC
 url: https://github.com/saniho/aldes-bridge
