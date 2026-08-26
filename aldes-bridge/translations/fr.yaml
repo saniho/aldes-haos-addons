@@ -1,0 +1,26 @@
+---
+configuration:
+  mode:
+    name: Mode
+    description: Mode de fonctionnement du bridge
+  mqtt_port:
+    name: Port MQTT
+    description: Port interne du listener MQTT/TLS
+  box_ip:
+    name: IP Box
+    description: IP de la box Aldes (pour filtrer iptables)
+  profile:
+    name: Profil
+    description: Profil device Aldes
+  history_days:
+    name: Rétention historique
+    description: Nombre de jours de rétention de l'historique SQLite
+  box_tz:
+    name: Timezone box
+    description: Timezone de la box Aldes pour la conversion des timestamps
+  ha_mqtt_enabled:
+    name: Home Assistant MQTT
+    description: Activer la découverte MQTT Home Assistant (auto-discovery)
+  ha_mqtt_dry_run:
+    name: Mode dry-run HA
+    description: Logger les commandes HA sans les envoyer à la box (recommandé)
