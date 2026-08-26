@@ -24,3 +24,9 @@ configuration:
   ha_mqtt_dry_run:
     name: Mode dry-run HA
     description: Logger les commandes HA sans les envoyer à la box (recommandé)
+  ha_mqtt_user:
+    name: Utilisateur MQTT
+    description: Nom d'utilisateur pour l'authentification MQTT (Mosquitto)
+  ha_mqtt_password:
+    name: Mot de passe MQTT
+    description: Mot de passe pour l'authentification MQTT (Mosquitto)

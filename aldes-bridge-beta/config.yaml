@@ -12,6 +12,7 @@ arch:
   - armv7
 init: false
 host_network: true
+hassio_role: "homeassistant"
 ingress: true
 ingress_port: 8080
 panel_icon: mdi:heat-pump
@@ -31,6 +32,8 @@ options:
   box_tz: Europe/Paris
   ha_mqtt_enabled: false
   ha_mqtt_dry_run: true
+  ha_mqtt_user: ""
+  ha_mqtt_password: ""
 schema:
   mqtt_port: int
   box_ip: str
@@ -40,4 +43,6 @@ schema:
   box_tz: str
   ha_mqtt_enabled: bool
   ha_mqtt_dry_run: bool
+  ha_mqtt_user: str
+  ha_mqtt_password: password
 stage: experimental
