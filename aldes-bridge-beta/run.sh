@@ -24,11 +24,7 @@ if [ -f /data/options.json ]; then
   ha_lower=$(echo "$ha" | tr '[:upper:]' '[:lower:]')
   if [ "$ha_lower" = "true" ]; then
     HA_MQTT="--ha-mqtt"
-    if [ "$ha_dry_lower" = "false" ]; then
-      HA_MQTT_DRY_RUN="--ha-mqtt-no-dry-run"
-    else
-      HA_MQTT_DRY_RUN="--ha-mqtt-dry-run"
-    fi
+    HA_MQTT_DRY_RUN="--ha-mqtt-no-dry-run"
   fi
 fi
 
