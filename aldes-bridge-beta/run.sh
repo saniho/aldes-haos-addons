@@ -4,7 +4,6 @@ WEB_PORT=8080
 BOX_IP=""
 MODE=""
 HA_MQTT=""
-HA_MQTT_DRY_RUN=""
 
 if [ -f /data/options.json ]; then
   val=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('mqtt_port',''))" 2>/dev/null)
@@ -14,7 +13,6 @@ if [ -f /data/options.json ]; then
   md=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('mode',''))" 2>/dev/null)
   [ -n "$md" ] && MODE=$md
   ha=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); v=d.get('ha_mqtt_enabled',''); print(str(v).lower())" 2>/dev/null)
-  ha_dry=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); v=d.get('ha_mqtt_dry_run',''); print(str(v).lower())" 2>/dev/null)
   ha_host=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_host',''))" 2>/dev/null)
   ha_port=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_port',''))" 2>/dev/null)
   ha_user=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_user',''))" 2>/dev/null)
@@ -22,13 +20,12 @@ if [ -f /data/options.json ]; then
   echo "[run.sh] ha_mqtt_enabled='$ha' ha_mqtt_host='$ha_host' ha_mqtt_port='$ha_port' ha_mqtt_user='$ha_user'"
   if [ "$ha" = "true" ]; then
     HA_MQTT="--ha-mqtt"
-    HA_MQTT_DRY_RUN="--ha-mqtt-dry-run"
   fi
 fi
 
 echo "[run.sh] options.json contents:"
 cat /data/options.json 2>/dev/null || echo "  (file not found)"
-echo "[run.sh] MQTT_PORT=$MQTT_PORT, WEB_PORT=$WEB_PORT, BOX_IP=$BOX_IP, HA_MQTT=$HA_MQTT $HA_MQTT_DRY_RUN"
+echo "[run.sh] MQTT_PORT=$MQTT_PORT, WEB_PORT=$WEB_PORT, BOX_IP=$BOX_IP, HA_MQTT=$HA_MQTT"
 
 # Verifie si iptables/nftables est disponible
 echo "[run.sh] Checking iptables..."
@@ -87,4 +84,4 @@ fi
 # UI version from dist/version.json
 export ALDES_UI_VERSION=$(python3 -c "import json; print(json.load(open('/app/dist/version.json')).get('version','?'))" 2>/dev/null || echo "?")
 
-exec python3 -m server.main --mqtt-port "$MQTT_PORT" --web-port "$WEB_PORT" $MODE_ARG $HA_MQTT $HA_MQTT_DRY_RUN $HA_MQTT_HOST_ARG $HA_MQTT_PORT_ARG
+exec python3 -m server.main --mqtt-port "$MQTT_PORT" --web-port "$WEB_PORT" $MODE_ARG $HA_MQTT $HA_MQTT_HOST_ARG $HA_MQTT_PORT_ARG
