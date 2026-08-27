@@ -1,19 +1,19 @@
 # Stage 1 : build du frontend React depuis le repo principal (tag beta)
 FROM node:20-alpine AS web
-ARG CACHEBUST=v0.7.0-beta.24
+ARG CACHEBUST=v0.7.0-beta.25
 RUN echo "Cache bust: $CACHEBUST" && date
 RUN apk add --no-cache git
 RUN git clone --depth 1 --branch feature/ha-auto-discovery https://github.com/saniho/aldes-bridge.git /src
 WORKDIR /src/web
 RUN npm ci --no-audit --no-fund && npm run build
-RUN python3 -c "import json; v=json.load(open('/src/web/package.json'))['version']; open('/src/web/dist/version.json','w').write(json.dumps({'version':v}))"
+RUN node -e "const p=require('/src/web/package.json'); require('fs').writeFileSync('/src/web/dist/version.json', JSON.stringify({version:p.version}))"
 
 # Stage 2 : runtime python
 FROM python:3.11-slim
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV ALDES_WEB_DIR=/app/dist
-ENV ALDES_ADDON_VERSION=v0.7.0-beta.24
+ENV ALDES_ADDON_VERSION=v0.7.0-beta.25
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     iptables \
