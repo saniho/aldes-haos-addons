@@ -13,18 +13,20 @@ if [ -f /data/options.json ]; then
   [ -n "$bip" ] && BOX_IP=$bip
   md=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('mode',''))" 2>/dev/null)
   [ -n "$md" ] && MODE=$md
-  ha=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_enabled',''))" 2>/dev/null)
-  ha_dry=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_dry_run',''))" 2>/dev/null)
+  ha=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); v=d.get('ha_mqtt_enabled',''); print(str(v).lower())" 2>/dev/null)
+  ha_dry=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); v=d.get('ha_mqtt_dry_run',''); print(str(v).lower())" 2>/dev/null)
   ha_host=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_host',''))" 2>/dev/null)
   ha_port=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_port',''))" 2>/dev/null)
   ha_user=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_user',''))" 2>/dev/null)
   ha_pass=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_password',''))" 2>/dev/null)
   echo "[run.sh] ha_mqtt_enabled='$ha' ha_mqtt_dry_run='$ha_dry' ha_mqtt_host='$ha_host' ha_mqtt_port='$ha_port' ha_mqtt_user='$ha_user'"
-  ha_dry_lower=$(echo "$ha_dry" | tr '[:upper:]' '[:lower:]')
-  ha_lower=$(echo "$ha" | tr '[:upper:]' '[:lower:]')
-  if [ "$ha_lower" = "true" ]; then
+  if [ "$ha" = "true" ]; then
     HA_MQTT="--ha-mqtt"
-    HA_MQTT_DRY_RUN="--ha-mqtt-no-dry-run"
+    if [ "$ha_dry" = "true" ]; then
+      HA_MQTT_DRY_RUN="--ha-mqtt-dry-run"
+    else
+      HA_MQTT_DRY_RUN="--ha-mqtt-no-dry-run"
+    fi
   fi
 fi
 
