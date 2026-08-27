@@ -30,15 +30,6 @@ echo "[run.sh] options.json contents:"
 cat /data/options.json 2>/dev/null || echo "  (file not found)"
 echo "[run.sh] MQTT_PORT=$MQTT_PORT, WEB_PORT=$WEB_PORT, BOX_IP=$BOX_IP, HA_MQTT=$HA_MQTT $HA_MQTT_DRY_RUN"
 
-# Diagnostique reseau
-echo "[run.sh] --- Network diagnosis ---"
-cat /proc/net/tcp 2>/dev/null | head -5 || true
-echo "[run.sh] Listening ports:"
-cat /proc/net/tcp 2>/dev/null | awk '{print $2}' | grep -v local | while read hex; do
-  port=$((16#${hex##*:}))
-  [ "$port" -gt 0 ] && echo "  port $port"
-done 2>/dev/null || true
-
 # Verifie si iptables/nftables est disponible
 echo "[run.sh] Checking iptables..."
 which iptables 2>/dev/null && echo "  iptables found" || echo "  iptables NOT found"
