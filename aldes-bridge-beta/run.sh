@@ -14,21 +14,26 @@ if [ -f /data/options.json ]; then
   md=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('mode',''))" 2>/dev/null)
   [ -n "$md" ] && MODE=$md
   ha=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_enabled',''))" 2>/dev/null)
-  [ "$ha" = "True" ] || [ "$ha" = "true" ] && HA_MQTT="--ha-mqtt"
   ha_dry=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_dry_run',''))" 2>/dev/null)
-  if [ "$ha" = "True" ] || [ "$ha" = "true" ]; then
-    if [ "$ha_dry" = "False" ] || [ "$ha_dry" = "false" ]; then
+  ha_host=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_host',''))" 2>/dev/null)
+  ha_port=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_port',''))" 2>/dev/null)
+  ha_user=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_user',''))" 2>/dev/null)
+  ha_pass=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_password',''))" 2>/dev/null)
+  echo "[run.sh] ha_mqtt_enabled='$ha' ha_mqtt_dry_run='$ha_dry' ha_mqtt_host='$ha_host' ha_mqtt_port='$ha_port' ha_mqtt_user='$ha_user'"
+  ha_dry_lower=$(echo "$ha_dry" | tr '[:upper:]' '[:lower:]')
+  ha_lower=$(echo "$ha" | tr '[:upper:]' '[:lower:]')
+  if [ "$ha_lower" = "true" ]; then
+    HA_MQTT="--ha-mqtt"
+    if [ "$ha_dry_lower" = "false" ]; then
       HA_MQTT_DRY_RUN="--ha-mqtt-no-dry-run"
     else
       HA_MQTT_DRY_RUN="--ha-mqtt-dry-run"
     fi
   fi
-  ha_host=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_host',''))" 2>/dev/null)
-  ha_port=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_port',''))" 2>/dev/null)
-  ha_user=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_user',''))" 2>/dev/null)
-  ha_pass=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_password',''))" 2>/dev/null)
 fi
 
+echo "[run.sh] options.json contents:"
+cat /data/options.json 2>/dev/null || echo "  (file not found)"
 echo "[run.sh] MQTT_PORT=$MQTT_PORT, WEB_PORT=$WEB_PORT, BOX_IP=$BOX_IP, HA_MQTT=$HA_MQTT $HA_MQTT_DRY_RUN"
 
 # Diagnostique reseau
