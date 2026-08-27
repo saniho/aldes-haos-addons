@@ -25,6 +25,8 @@ if [ -f /data/options.json ]; then
   fi
   ha_user=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_user',''))" 2>/dev/null)
   ha_pass=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_password',''))" 2>/dev/null)
+  ha_host=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_host',''))" 2>/dev/null)
+  ha_port=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_port',''))" 2>/dev/null)
 fi
 
 echo "[run.sh] MQTT_PORT=$MQTT_PORT, WEB_PORT=$WEB_PORT, BOX_IP=$BOX_IP, HA_MQTT=$HA_MQTT $HA_MQTT_DRY_RUN"
@@ -83,4 +85,12 @@ if [ -n "$MODE" ]; then
 fi
 export HA_MQTT_USER="$ha_user"
 export HA_MQTT_PASSWORD="$ha_pass"
-exec python3 -m server.main --mqtt-port "$MQTT_PORT" --web-port "$WEB_PORT" $MODE_ARG $HA_MQTT $HA_MQTT_DRY_RUN
+HA_MQTT_HOST_ARG=""
+HA_MQTT_PORT_ARG=""
+if [ -n "$ha_host" ]; then
+  HA_MQTT_HOST_ARG="--ha-mqtt-host $ha_host"
+fi
+if [ -n "$ha_port" ] && [ "$ha_port" != "1883" ]; then
+  HA_MQTT_PORT_ARG="--ha-mqtt-port $ha_port"
+fi
+exec python3 -m server.main --mqtt-port "$MQTT_PORT" --web-port "$WEB_PORT" $MODE_ARG $HA_MQTT $HA_MQTT_DRY_RUN $HA_MQTT_HOST_ARG $HA_MQTT_PORT_ARG
