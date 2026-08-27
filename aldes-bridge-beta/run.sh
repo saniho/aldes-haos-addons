@@ -22,7 +22,7 @@ if [ -f /data/options.json ]; then
   echo "[run.sh] ha_mqtt_enabled='$ha' ha_mqtt_host='$ha_host' ha_mqtt_port='$ha_port' ha_mqtt_user='$ha_user'"
   if [ "$ha" = "true" ]; then
     HA_MQTT="--ha-mqtt"
-    HA_MQTT_DRY_RUN="--ha-mqtt-no-dry-run"
+    HA_MQTT_DRY_RUN="--ha-mqtt-dry-run"
   fi
 fi
 
