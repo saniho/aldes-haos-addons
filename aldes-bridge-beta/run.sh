@@ -19,14 +19,10 @@ if [ -f /data/options.json ]; then
   ha_port=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_port',''))" 2>/dev/null)
   ha_user=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_user',''))" 2>/dev/null)
   ha_pass=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_password',''))" 2>/dev/null)
-  echo "[run.sh] ha_mqtt_enabled='$ha' ha_mqtt_dry_run='$ha_dry' ha_mqtt_host='$ha_host' ha_mqtt_port='$ha_port' ha_mqtt_user='$ha_user'"
+  echo "[run.sh] ha_mqtt_enabled='$ha' ha_mqtt_host='$ha_host' ha_mqtt_port='$ha_port' ha_mqtt_user='$ha_user'"
   if [ "$ha" = "true" ]; then
     HA_MQTT="--ha-mqtt"
-    if [ "$ha_dry" = "true" ]; then
-      HA_MQTT_DRY_RUN="--ha-mqtt-dry-run"
-    else
-      HA_MQTT_DRY_RUN="--ha-mqtt-no-dry-run"
-    fi
+    HA_MQTT_DRY_RUN="--ha-mqtt-no-dry-run"
   fi
 fi
 
