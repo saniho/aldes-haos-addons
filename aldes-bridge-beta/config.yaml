@@ -6,7 +6,6 @@ description: Bridge MQTT/TLS pour Aldes T.ONE AquaAir — version beta avec auto
 url: https://github.com/saniho/aldes-bridge
 maintainer: saniho
 codenotary: saniho@users.noreply.github.com
-image: ghcr.io/saniho/aldes-bridge-beta/{arch}
 arch:
   - amd64
   - aarch64

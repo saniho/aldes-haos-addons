@@ -20,10 +20,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     net-tools \
     build-essential \
     python3-dev \
+    libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=web /src/requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt \
+    && apt-get purge -y --auto-remove build-essential python3-dev libffi-dev \
+    && rm -rf /var/lib/apt/lists/*
 COPY --from=web /src/server/ ./server/
 COPY --from=web /src/profiles/ ./profiles/
 COPY --from=web /src/web/dist ./dist
