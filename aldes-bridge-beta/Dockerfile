@@ -18,10 +18,15 @@ ENV ALDES_ADDON_VERSION=v0.7.0-beta.31
 RUN apt-get update && apt-get install -y --no-install-recommends \
     iptables \
     net-tools \
+    gcc \
+    python3-dev \
+    musl-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=web /src/requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt \
+    && apt-get purge -y --auto-remove gcc python3-dev musl-dev \
+    && rm -rf /var/lib/apt/lists/*
 COPY --from=web /src/server/ ./server/
 COPY --from=web /src/profiles/ ./profiles/
 COPY --from=web /src/web/dist ./dist
