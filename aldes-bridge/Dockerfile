@@ -1,6 +1,6 @@
-# Stage 1 : build du frontend React depuis le repo principal
+# Stage 1 : build du frontend React depuis le repo principal (tag stable)
 FROM node:20-alpine AS web
-ARG CACHEBUST=16
+ARG CACHEBUST=v0.8.0
 RUN echo "Cache bust: $CACHEBUST" && date
 RUN apk add --no-cache git
 RUN git clone --depth 1 --branch main https://github.com/saniho/aldes-bridge.git /src
@@ -16,10 +16,16 @@ ENV ALDES_WEB_DIR=/app/dist
 RUN apt-get update && apt-get install -y --no-install-recommends \
     iptables \
     net-tools \
+    build-essential \
+    python3-dev \
+    libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=web /src/requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt \
+    && apt-get purge -y --auto-remove build-essential python3-dev libffi-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --from=web /src/server/ ./server/
 COPY --from=web /src/profiles/ ./profiles/
 COPY --from=web /src/web/dist ./dist

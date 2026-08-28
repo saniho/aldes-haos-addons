@@ -7,7 +7,9 @@ Add-ons Home Assistant OS pour le [Aldes Bridge](https://github.com/saniho/aldes
 > ⚠️ **Avis de non-responsabilité :** ce projet est un projet indépendant et sans aucun lien avec Aldes. Il n'est ni approuvé, ni sponsorisé, ni affilié à Aldes ou à ses filiales. Il est fourni « en l'état » et utilisé à vos propres risques : aucun support, aucune garantie. L'usage de ce pont peut perturber le fonctionnement normal de votre équipement Aldes (et potentiellement le cloud Aldes) — assurez-vous de comprendre les risques avant de l'utiliser.
 
 Ce repo fournit un add-on HAOS qui déploie le bridge MQTT/TLS pour Aldes T.ONE AquaAir
-directement sur Home Assistant OS, sans Docker ni SSH.
+directement sur Home Assistant OS, sans Docker ni SSH. Le bridge inclut désormais
+l'**auto-discovery MQTT Home Assistant** : les températures, modes, ECS et vacances
+apparaissent automatiquement dans HA sans configuration manuelle.
 
 ## Prérequis
 
@@ -134,8 +136,32 @@ ou directement dans la barre latérale de Home Assistant (panel Aldes Bridge).
 | `profile` | Profil device Aldes | `tone-aquaair` |
 | `history_days` | Rétention de l'historique SQLite (jours) | `90` |
 | `box_tz` | Timezone de la box Aldes | `Europe/Paris` |
+| `ha_mqtt_enabled` | Activer l'auto-discovery MQTT Home Assistant | `true` |
+| `ha_mqtt_dry_run` | Mode dry-run (ne pas envoyer de commandes à la box) | `true` |
+| `ha_mqtt_host` | Hôte du broker MQTT HA (auto-détecté si vide) | `""` |
+| `ha_mqtt_port` | Port du broker MQTT HA | `1883` |
+| `ha_mqtt_user` | Utilisateur MQTT HA | `""` |
+| `ha_mqtt_password` | Mot de passe MQTT HA | `""` |
 
 Le mode peut être changé à tout moment depuis la Web UI.
+
+### Auto-discovery MQTT Home Assistant
+
+L'add-on publie automatiquement des messages d'auto-discovery sur le broker MQTT
+de Home Assistant. Les entités suivantes sont créées :
+
+- **Climate** par zone (température actuelle, consigne, modes air, presets)
+- **Sensors** : mode air actuel, mode ECS, personnes, vacances, températures ECS
+- **Binary sensors** : état du ballon ECS
+
+Pour activer l'auto-discovery :
+
+1. Configurer les identifiants MQTT de HA dans les options de l'add-on
+2. Activer `ha_mqtt_enabled`
+3. Laisser `ha_mqtt_dry_run: true` pour tester (les commandes ne sont pas envoyées à la box)
+4. Quand c'est bon, passer `ha_mqtt_dry_run: false` pour envoyer les commandes réelles
+
+Le toggle est aussi disponible dans l'UI du bridge (Config → "Envoyer commandes HA vers la box").
 
 ### Port MQTT
 
@@ -191,15 +217,17 @@ Se met à jour depuis le store HAOS normalement.
 ## Architecture
 
 ```
-Box Aldes ──MQTT/TLS:8883──→ HAOS (aldes-bridge)
+Box Aldes ──MQTT/TLS:8883──→ HAOS (aldes-bridge) ──MQTT:1883──→ Mosquitto ←── HA auto-discovery
 Box Aldes ──DNS:53─────────→ HAOS (dnsmasq) ──→ Box/routeur
 Navigateur ──HTTP:8080────→ HAOS (aldes-bridge) → Web UI
 ```
 
-- **aldes-bridge** : bridge MQTT/TLS + API + Web UI, tourne en `host_network`
+- **aldes-bridge** : bridge MQTT/TLS + API + Web UI + auto-discovery HA, tourne en `host_network`
   (écoute sur l'IP de la HAOS, port MQTT configurable, port HTTP 8080)
 - **dnsmasq** : résout `aldesiotsuite.azure-devices.net` vers l'IP de la HAOS,
   relaie le reste vers le DNS upstream. N'intervient pas sur les ports MQTT.
+- **auto-discovery** : le bridge publie les entités HA sur le broker MQTT local
+  (Mosquitto ou autre), permettant le contrôle direct depuis HA.
 
 > 📖 **Détails réseau** (iptables, DoH, topologie) : voir la section
 > [Réseau (Home Assistant OS)](https://github.com/saniho/aldes-bridge#réseau-home-assistant-os)
