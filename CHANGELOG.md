@@ -4,6 +4,25 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.8.4] — 2026-08-29
+
+### Corrigé
+- **HA Discovery** : précision des températures à 0.1°C
+- **HA Discovery** : `temp_step` lu depuis le profil PAC
+- **HA Discovery** : presets air et eau chaude chargés depuis le profil Aldes (noms français)
+- **MQTT** : variable `HA_MQTT_DRY_RUN` prise en compte effective
+
+## [0.8.3] — 2026-08-29
+
+### Corrigé
+- **HA Discovery** : zones correctement nommées "Zone N" dans HA
+- **HA Discovery** : températures affichées avec une décimale
+
+## [0.8.2] — 2026-08-29
+
+### Corrigé
+- **HA Discovery** : index des zones corrigé (Zone 2 bridge = Zone 2 HA)
+
 ## [0.8.0] — 2026-08-28
 
 ### Ajouté
