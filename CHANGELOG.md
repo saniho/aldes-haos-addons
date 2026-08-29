@@ -4,6 +4,15 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.8.5] — 2026-08-29
+
+### Corrigé
+- **HA Discovery** : élimination du flicker "Inconnu" des entités climate (nettoyage ciblé)
+- **HA Discovery** : persistance des zones actives dans `logs/zones.json` pour nettoyage au redemarrage
+
+### Ajouté
+- Argument CLI `--zones-file` pour la persistance des zones actives
+
 ## [0.8.4] — 2026-08-29
 
 ### Corrigé
