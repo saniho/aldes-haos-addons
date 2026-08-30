@@ -45,11 +45,10 @@ jobs:
         with:
           context: aldes-bridge-beta
           push: true
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64,linux/arm64
           tags: |
             ghcr.io/${{ github.repository_owner }}/aldes-bridge-beta/amd64:${{ steps.version.outputs.version }}
             ghcr.io/${{ github.repository_owner }}/aldes-bridge-beta/aarch64:${{ steps.version.outputs.version }}
-            ghcr.io/${{ github.repository_owner }}/aldes-bridge-beta/armv7:${{ steps.version.outputs.version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -87,10 +86,9 @@ jobs:
         with:
           context: aldes-bridge
           push: true
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64,linux/arm64
           tags: |
             ghcr.io/${{ github.repository_owner }}/aldes-bridge/amd64:${{ steps.version.outputs.version }}
             ghcr.io/${{ github.repository_owner }}/aldes-bridge/aarch64:${{ steps.version.outputs.version }}
-            ghcr.io/${{ github.repository_owner }}/aldes-bridge/armv7:${{ steps.version.outputs.version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
