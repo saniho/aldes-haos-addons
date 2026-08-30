@@ -4,6 +4,17 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.10.1-beta.1] — 2026-08-30
+
+### Changé
+- Refactor majeur du backend : scission des fichiers monolithiques (`api.py` 746L → `routers/` 8 modules, `ha_discovery.py` 1082L → `ha/` 4 modules)
+- Déduplication du code (~200L supprimées) : `safe_float()`, `parse_json_payload()`, `get_state()`/`get_engine()` partagés
+- Suppression du shim backward-compat `ha_discovery.py`
+- `ListenHandler` : composition via injection de stratégie au lieu de l'héritage
+- `run_diagnostic()` scindé en 15 fonctions par check
+- `main()` allégé avec `_setup_ha_client()` extrait
+- Branche : `feature/refactor-ha-api-appstate`
+
 ## [0.9.0] — 2026-08-30
 
 ### Ajouté
