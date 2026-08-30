@@ -1,9 +1,9 @@
 # Stage 1 : build du frontend React depuis le repo principal (tag beta)
 FROM node:20-alpine AS web
-ARG CACHEBUST=v0.8.3-beta.1
+ARG CACHEBUST=v0.9.0
 RUN echo "Cache bust: $CACHEBUST" && date
 RUN apk add --no-cache git
-RUN git clone --depth 1 --branch feature/climate-precision https://github.com/saniho/aldes-bridge.git /src
+RUN git clone --depth 1 --branch main https://github.com/saniho/aldes-bridge.git /src
 WORKDIR /src/web
 RUN npm ci --no-audit --no-fund && npm run build
 RUN node -e "const p=require('/src/web/package.json'); require('fs').writeFileSync('/src/web/dist/version.json', JSON.stringify({version:p.version}))"
