@@ -4,6 +4,14 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.9.0] — 2026-08-30
+
+### Ajouté
+- **Diagnostic** : check certificat TLS (expiration, warn < 30 jours)
+- **Diagnostic** : latence réseau Azure (RTT TCP en ms)
+- **Diagnostic** : santé processus backend (uptime + mémoire RSS)
+- **Diagnostic** : consignes en attente de confirmation (warn > 5min, perdu > 30min)
+
 ## [0.8.6] — 2026-08-30
 
 ### Corrigé
