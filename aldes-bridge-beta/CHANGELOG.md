@@ -4,6 +4,12 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.10.1-beta.4] — 2026-08-31
+
+### Changé
+- Modes air séparés climatisation / chauffage
+- Labels ECS : Off, On, Boost
+
 ## [0.10.1-beta.1] — 2026-08-30
 
 ### Changé
