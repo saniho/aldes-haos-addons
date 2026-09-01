@@ -4,6 +4,15 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.11.0] — 2026-08-31
+
+### Changé
+- Refactor majeur mergé sur main : split monolithes, deduplication, composition
+- Modes air séparés Climatisation / Chauffage (sans doublons hors Off)
+- ECS : Off, On, Boost
+- UI : boutons séparés Climatisation / Chauffage
+- Dockerfile clone maintenant la branche main
+
 ## [0.10.1-beta.4] — 2026-08-31
 
 ### Changé
