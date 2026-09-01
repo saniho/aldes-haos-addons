@@ -4,6 +4,18 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.12.0] — 2026-09-01
+
+### Ajouté
+- **HA Discovery** : entité `water_heater` pour le ballon d'eau chaude (remplacement du `select ecs_mode`)
+  - Opérations : Off (L) / On (M) / Boost (N)
+  - Labels lus depuis le profil device (`tone-aquaair`)
+- **HA Discovery** : capteurs ECS — Niveau ECS (`NED` %), Ballon Bas (`TBBa` °C), Ballon Haut (`TBHa` °C)
+- **Tests** : 9 tests unitaires ajoutés pour la validation ECS (164/164 passent)
+
+### Corrigé
+- **HA Discovery** : les valeurs ECS (`NED`, `TBBa`, `TBHa`) sont publiées au démarrage depuis `telemetry.json`
+
 ## [0.9.0] — 2026-08-30
 
 ### Ajouté
