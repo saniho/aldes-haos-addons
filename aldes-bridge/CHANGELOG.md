@@ -4,6 +4,12 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.12.3] — 2026-09-02
+
+### Ajouté
+- **Infra** : endpoint `/healthz` pour liveness/readiness probes Kubernetes et docker-compose
+- **Infra** : endpoint `/api/health` retourne status, uptime, mqtt_connected, box_connected
+
 ## [0.12.2] — 2026-09-02
 
 ### Corrigé
