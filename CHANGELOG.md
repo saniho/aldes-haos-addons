@@ -4,6 +4,11 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.12.1] — 2026-09-01
+
+### Corrigé
+- Merge de la branche `feature/water-heater-ha` sur `main` — les entités ECS sont maintenant disponibles sur la version stable
+
 ## [0.12.0] — 2026-09-01
 
 ### Ajouté
