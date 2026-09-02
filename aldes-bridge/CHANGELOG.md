@@ -4,6 +4,11 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.12.6] — 2026-09-02
+
+### Retiré
+- Option `ha_mqtt_dry_run` de l'addon (le bridge garde son comportement par défaut)
+
 ## [0.12.5] — 2026-09-02
 
 ### Ajouté

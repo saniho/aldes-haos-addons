@@ -4,7 +4,6 @@ WEB_PORT=8080
 BOX_IP=""
 MODE=""
 HA_MQTT=""
-HA_MQTT_DRY_RUN=""
 
 if [ -f /data/options.json ]; then
   val=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('mqtt_port',''))" 2>/dev/null)
@@ -15,21 +14,13 @@ if [ -f /data/options.json ]; then
   [ -n "$md" ] && MODE=$md
   ha=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_enabled',''))" 2>/dev/null)
   [ "$ha" = "True" ] || [ "$ha" = "true" ] && HA_MQTT="--ha-mqtt"
-  ha_dry=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_dry_run',''))" 2>/dev/null)
-  if [ "$ha" = "True" ] || [ "$ha" = "true" ]; then
-    if [ "$ha_dry" = "False" ] || [ "$ha_dry" = "false" ]; then
-      HA_MQTT_DRY_RUN="--ha-mqtt-no-dry-run"
-    else
-      HA_MQTT_DRY_RUN="--ha-mqtt-dry-run"
-    fi
-  fi
   ha_user=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_user',''))" 2>/dev/null)
   ha_pass=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_password',''))" 2>/dev/null)
   ha_host=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_host',''))" 2>/dev/null)
   ha_port=$(python3 -c "import json,sys; d=json.load(open('/data/options.json')); print(d.get('ha_mqtt_port',''))" 2>/dev/null)
 fi
 
-echo "[run.sh] MQTT_PORT=$MQTT_PORT, WEB_PORT=$WEB_PORT, BOX_IP=$BOX_IP, HA_MQTT=$HA_MQTT $HA_MQTT_DRY_RUN"
+echo "[run.sh] MQTT_PORT=$MQTT_PORT, WEB_PORT=$WEB_PORT, BOX_IP=$BOX_IP, HA_MQTT=$HA_MQTT"
 
 # Diagnostique reseau
 echo "[run.sh] --- Network diagnosis ---"
@@ -93,4 +84,4 @@ fi
 if [ -n "$ha_port" ] && [ "$ha_port" != "1883" ]; then
   HA_MQTT_PORT_ARG="--ha-mqtt-port $ha_port"
 fi
-exec python3 -m server.main --mqtt-port "$MQTT_PORT" --web-port "$WEB_PORT" $MODE_ARG $HA_MQTT $HA_MQTT_DRY_RUN $HA_MQTT_HOST_ARG $HA_MQTT_PORT_ARG
+exec python3 -m server.main --mqtt-port "$MQTT_PORT" --web-port "$WEB_PORT" $MODE_ARG $HA_MQTT $HA_MQTT_HOST_ARG $HA_MQTT_PORT_ARG
