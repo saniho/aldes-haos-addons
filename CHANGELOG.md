@@ -4,6 +4,11 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.12.2] — 2026-09-02
+
+### Corrigé
+- **HA Discovery** : supprimé `device_class: water` du capteur Niveau ECS (incompatible avec l'unité `%` — HA rejetait la config discovery)
+
 ## [0.12.1] — 2026-09-01
 
 ### Corrigé
