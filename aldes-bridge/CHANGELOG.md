@@ -4,6 +4,11 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.12.4] — 2026-09-02
+
+### Ajouté
+- **HA Discovery** : entité `binary_sensor` pour la protection anti-légionelles (`AntiL`) — `device_class: safety`
+
 ## [0.12.3] — 2026-09-02
 
 ### Ajouté
