@@ -4,6 +4,11 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.12.7] — 2026-09-02
+
+### Changé
+- Bridge : `ha_mqtt_dry_run` passe à `False` par défaut — les commandes HA sont envoyées à la box
+
 ## [0.12.6] — 2026-09-02
 
 ### Retiré
