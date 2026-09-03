@@ -1,9 +1,9 @@
 # Stage 1 : build du frontend React depuis le repo principal (tag beta)
 FROM node:20-alpine AS web
-ARG CACHEBUST=v0.13.0-beta
+ARG CACHEBUST=v0.13.0-beta-health-sensors
 RUN echo "Cache bust: $CACHEBUST" && date
 RUN apk add --no-cache git
-RUN git clone --depth 1 --branch main https://github.com/saniho/aldes-bridge.git /src
+RUN git clone --depth 1 --branch feature/health-sensors https://github.com/saniho/aldes-bridge.git /src
 WORKDIR /src/web
 RUN npm ci --no-audit --no-fund && npm run build
 RUN node -e "const p=require('/src/web/package.json'); require('fs').writeFileSync('/src/web/dist/version.json', JSON.stringify({version:p.version}))"
@@ -13,7 +13,7 @@ FROM python:3.11-slim
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV ALDES_WEB_DIR=/app/dist
-ENV ALDES_ADDON_VERSION=v0.13.0-beta
+ENV ALDES_ADDON_VERSION=v0.13.0-beta-health-sensors
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     iptables \
