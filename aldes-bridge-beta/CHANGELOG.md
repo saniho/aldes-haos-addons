@@ -10,6 +10,27 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 - **Infra** : endpoint `/healthz` pour liveness/readiness probes Kubernetes et docker-compose
 - **Infra** : endpoint `/api/health` retourne status, uptime, mqtt_connected, box_connected
 
+## [0.13.2-beta2] — 2026-09-03
+
+### Changé
+- Bump version beta2 (Dockerfile pointe sur branche feature/health-panel)
+
+## [0.13.2-beta1] — 2026-09-03
+
+### Ajouté
+- **UI** : nouvel onglet "Santé" dans la barre principale
+- **UI** : panneau état compresseur (MfAc) — marche/arrêt
+- **UI** : panneau pressions circuit (PreH, dHi, dLo)
+- **UI** : panneau alertes haute pression (HPC) et défaut circuit froid (Defr)
+- **Backend** : endpoint `/api/config` retourne `health` avec les 7 clés santé
+- **Backend** : extraction des clés santé depuis la télémétrie courante
+
+## [0.12.3] — 2026-09-02
+
+### Ajouté
+- **Infra** : endpoint `/healthz` pour liveness/readiness probes Kubernetes et docker-compose
+- **Infra** : endpoint `/api/health` retourne status, uptime, mqtt_connected, box_connected
+
 ## [0.11.0] — 2026-08-31
 
 ### Changé
