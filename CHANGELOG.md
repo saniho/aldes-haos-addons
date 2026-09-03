@@ -4,6 +4,11 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.12.10] — 2026-09-02
+
+### Changé
+- Synchronisation de version (0.12.9 → 0.12.10) — Dockerfiles CACHEBUST + ALDES_ADDON_VERSION alignés
+
 ## [0.12.9] — 2026-09-02
 
 ### Ajouté
