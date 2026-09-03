@@ -4,6 +4,12 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.12.8] — 2026-09-02
+
+### Changé
+- **HA Discovery** : `binary_sensor` anti-légionelles — `device_class` corrigé de `safety` à `running` (ON = "Running", OFF = "Stopped" au lieu de "Danger"/"Safe")
+- **HA Discovery** : `ha_mqtt_dry_run` passe de `True` à `False` par défaut
+
 ## [0.12.3] — 2026-09-02
 
 ### Ajouté
