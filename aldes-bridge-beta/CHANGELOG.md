@@ -10,6 +10,31 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 - **Infra** : endpoint `/healthz` pour liveness/readiness probes Kubernetes et docker-compose
 - **Infra** : endpoint `/api/health` retourne status, uptime, mqtt_connected, box_connected
 
+## [0.13.2-beta7] — 2026-09-08
+
+### Corrigé
+- **UI** : alerte Defr masquée quand compresseur arrêt (MfAc = 0) — fix définitif
+
+## [0.13.2-beta6] — 2026-09-08
+
+### Ajouté
+- **UI** : température extérieure (Text) et vitesse ventilateur (RVeI) dans le panneau santé
+
+## [0.13.2-beta5] — 2026-09-08
+
+### Corrigé
+- **UI** : comparaisons Defr/UAM robustifiées avec Number()
+
+## [0.13.2-beta4] — 2026-09-08
+
+### Corrigé
+- **UI** : afficher "N/A (clim off)" pour Defr quand UAM = 0
+
+## [0.13.2-beta3] — 2026-09-08
+
+### Corrigé
+- **UI** : suppression variable level non utilisée (TS6133)
+
 ## [0.13.2-beta2] — 2026-09-03
 
 ### Changé
