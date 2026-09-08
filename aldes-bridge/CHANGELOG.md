@@ -4,6 +4,17 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.13.3] — 2026-09-08
+
+### Ajouté
+- **UI** : onglet "Santé" — diagnostic compresseur, pressions circuit, alertes
+- **UI** : température extérieure (Text) et vitesse ventilateur (RVeI)
+- **Backend** : clés santé extraites depuis la télémétrie (PreH, dHi, dLo, HPC, MfAc, MfEc, Defr, UAM, Text, RVeI)
+
+### Corrigé
+- **UI** : alerte Defr masquée quand compresseur arrêt (MfAc = 0)
+- **UI** : comparaisons Defr/UAM robustifiées avec Number()
+
 ## [0.12.7] — 2026-09-02
 
 ### Changé
