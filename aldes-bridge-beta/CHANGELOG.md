@@ -10,6 +10,11 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 - **Infra** : endpoint `/healthz` pour liveness/readiness probes Kubernetes et docker-compose
 - **Infra** : endpoint `/api/health` retourne status, uptime, mqtt_connected, box_connected
 
+## [0.13.4-beta2] — 2026-09-08
+
+### Corrigé
+- **Bridge** : gestion du SIGTERM pour un arrêt propre du container (exit code 137 corrigé)
+
 ## [0.13.4-beta1] — 2026-09-08
 
 ### Ajouté
