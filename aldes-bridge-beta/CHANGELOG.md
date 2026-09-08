@@ -10,6 +10,13 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 - **Infra** : endpoint `/healthz` pour liveness/readiness probes Kubernetes et docker-compose
 - **Infra** : endpoint `/api/health` retourne status, uptime, mqtt_connected, box_connected
 
+## [0.13.4-beta1] — 2026-09-08
+
+### Ajouté
+- **UI** : section "Ventilation" dans TempsPanel — RPM ventilateur (RVeI) et débits d'air (Dno, Dma, Dint, DLN, DPLe, DmCO)
+- **Backend** : extraction des clés ventilation depuis la télémétrie courante
+- **HA MQTT** : capteurs ventilation (fan RPM, airflow nominal/max/medium/night/full/max CO2) en auto-discovery
+
 ## [0.13.2-beta7] — 2026-09-08
 
 ### Corrigé
