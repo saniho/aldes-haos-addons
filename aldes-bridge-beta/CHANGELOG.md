@@ -15,7 +15,7 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 ### Corrigé
 - **Bridge** : gestion du SIGTERM pour un arrêt propre du container (exit code 137 corrigé)
 
-## [0.13.4-beta1] — 2026-09-08
+## [0.13.5-beta1] — 2026-09-08
 
 ### Ajouté
 - **UI** : section "Ventilation" dans TempsPanel — RPM ventilateur (RVeI) et débits d'air (Dno, Dma, Dint, DLN, DPLe, DmCO)

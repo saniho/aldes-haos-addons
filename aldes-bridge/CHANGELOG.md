@@ -4,7 +4,7 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
-## [0.13.4] — 2026-09-08
+## [0.13.5] — 2026-09-08
 
 ### Ajouté
 - **UI** : section « Ventilation » dans TempsPanel — RPM ventilateur (RVeI) et débits d'air (Dno, Dma, Dint, DLN, DPLe, DmCO) en m³/h
