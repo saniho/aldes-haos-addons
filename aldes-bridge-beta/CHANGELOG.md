@@ -22,6 +22,9 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 - **Backend** : extraction des clés ventilation depuis la télémétrie courante
 - **HA MQTT** : capteurs ventilation (fan RPM, airflow nominal/max/medium/night/full/max CO2) en auto-discovery
 
+### Corrigé
+- **Backend** : arrêt propre du container (exit 137) — handler SIGTERM + timeout_graceful_shutdown uvicorn
+
 ## [0.13.2-beta7] — 2026-09-08
 
 ### Corrigé
