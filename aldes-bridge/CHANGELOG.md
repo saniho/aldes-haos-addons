@@ -4,6 +4,16 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.13.4] — 2026-09-08
+
+### Ajouté
+- **UI** : section « Ventilation » dans TempsPanel — RPM ventilateur (RVeI) et débits d'air (Dno, Dma, Dint, DLN, DPLe, DmCO) en m³/h
+- **Backend** : extraction des clés ventilation depuis la télémétrie courante
+- **HA MQTT** : capteurs ventilation (fan RPM, airflow nominal/max/medium/night/full/max CO2) en auto-discovery
+
+### Corrigé
+- **Backend** : arrêt propre du container (exit 137) — handler SIGTERM + timeout_graceful_shutdown uvicorn
+
 ## [0.13.3] — 2026-09-08
 
 ### Ajouté
