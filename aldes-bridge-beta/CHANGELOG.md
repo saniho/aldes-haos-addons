@@ -4,7 +4,7 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
-## [0.13.5-beta2] — 2026-09-08
+## [0.13.6-beta1] — 2026-09-08
 
 ### Ajouté
 - **Backend** : persistance séparée des données santé (PreH, Text, RVeI, MfAc...) dans `telemetry.json` sous la clé `"health"` — garantit l'affichage du panneau santé au redémarrage
