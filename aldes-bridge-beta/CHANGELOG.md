@@ -4,7 +4,7 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
-## [0.14.1-beta1] — 2026-09-10
+## [0.14.2-beta2] — 2026-09-10
 
 ### Ajouté
 - **Backend** : nettoyage automatique des consignes en attente après 2 tentatives non concordantes de la PAC — évite les consignes bloquées indéfiniment en `confirmed: false`
