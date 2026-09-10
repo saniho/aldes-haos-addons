@@ -4,6 +4,14 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.14.1-beta1] — 2026-09-10
+
+### Ajouté
+- **Backend** : nettoyage automatique des consignes en attente après 2 tentatives non concordantes de la PAC — évite les consignes bloquées indéfiniment en `confirmed: false`
+- **Backend** : compteur `attempts` dans la structure `_consignes` pour tracer le nombre de tentatives avant désactivation
+- **Frontend** : affichage du compteur de tentatives (ex: `demandé 22.0 °C (tentative 1/2)`) dans le panneau températures
+- **Frontend** : événement SSE `rejected` pour informer l'utilisateur du rejet d'une consigne
+
 ## [0.13.7-beta2] — 2026-09-10
 
 ### Corrigé
