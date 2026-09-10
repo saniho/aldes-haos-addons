@@ -4,6 +4,11 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.13.7] — 2026-09-10
+
+### Corrigé
+- **Backend** : vitesse ventilateur (RVeI) divisée par 10 pour afficher la valeur réelle en tr/min (panneau santé + sensor HA)
+
 ## [0.13.6] — 2026-09-08
 
 ### Ajouté
