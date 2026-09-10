@@ -13,7 +13,7 @@ FROM python:3.11-slim
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV ALDES_WEB_DIR=/app/dist
-ENV ALDES_ADDON_VERSION=v0.13.6
+ENV ALDES_ADDON_VERSION=v0.13.7
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     iptables \
