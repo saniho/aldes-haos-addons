@@ -4,6 +4,12 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.16.0-beta1] — 2026-09-16
+
+### Ajouté
+- **Backend** : températures avancées (TAin, TAHU, TAHL, TEHG, TEHL, TEHU, TUeH, THGa) ajoutées aux données health persistées
+- **Frontend** : carte "Températures avancées" dans le panneau santé — grille avec 8 capteurs de l'échangeur de chaleur
+
 ## [0.15.0-beta3] — 2026-09-16
 
 ### Corrigé
