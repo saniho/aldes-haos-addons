@@ -4,6 +4,17 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.15.0] — 2026-09-16
+
+### Ajouté
+- **Backend** : sensors HA MQTT pour les températures de zones (MT0-MT9) — un sensor par zone active, regroupé sous le device "PAC Aldes"
+- **Backend** : toggle `ha_zone_sensors` dans les settings pour activer/désactiver l'exposition des températures de zones en tant que sensors HA
+- **Frontend** : toggle "Exposer temperatures zones en sensors HA" dans le panneau Configuration
+
+### Corrigé
+- **Backend** : détection des zones actives exclut les zones avec température ET consigne à 0 — évite les sensors/climats fantômes
+- **Backend** : nettoyage forcé de toutes les zones 0-9 inactives à chaque cycle discovery — élimine les entités phantom après mise à jour
+
 ## [0.14.5] — 2026-09-16
 
 ### Ajouté
