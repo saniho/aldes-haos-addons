@@ -3,7 +3,7 @@ FROM node:20-alpine AS web
 ARG CACHEBUST=v0.16.0-beta1
 RUN echo "Cache bust: $CACHEBUST" && date
 RUN apk add --no-cache git
-RUN git clone --depth 1 --branch feature/zone-temperature-sensors https://github.com/saniho/aldes-bridge.git /src
+RUN git clone --depth 1 --branch feature/advanced-temps-health https://github.com/saniho/aldes-bridge.git /src
 WORKDIR /src/web
 RUN npm ci --no-audit --no-fund && npm run build
 RUN node -e "const p=require('/src/web/package.json'); require('fs').writeFileSync('/src/web/dist/version.json', JSON.stringify({version:p.version}))"
