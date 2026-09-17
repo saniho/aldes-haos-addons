@@ -4,6 +4,11 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.16.0-beta2] — 2026-09-17
+
+### Corrigé
+- **Backend** : filtrage des valeurs sentinelles (≤ -40 °C) des capteurs de températures avancées — évite d'afficher des valeurs absurdement basses pour des capteurs non connectés
+
 ## [0.16.0-beta1] — 2026-09-16
 
 ### Ajouté
