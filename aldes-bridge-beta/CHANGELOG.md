@@ -4,6 +4,11 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.16.0-beta3] — 2026-09-17
+
+### Corrigé
+- **Backend** : filtrage des valeurs sentinelles (≤ -40 °C) dans `_extract_health()` et au chargement de `telemetry.json` — corrige l'affichage de -40 °C dans le panneau Santé
+
 ## [0.16.0-beta2] — 2026-09-17
 
 ### Corrigé
