@@ -4,6 +4,14 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.16.0] — 2026-09-17
+
+### Ajouté
+- **Panneau Santé** : 8 capteurs de températures avancées (TAin, TAHU, TAHL, TEHG, TEHL, TEHU, TUeH, THGa) avec nouvelle carte "Températures avancées"
+
+### Corrigé
+- **Backend** : filtrage des valeurs sentinelles (≤ -40 °C) dans `store_telemetry()`, `_extract_health()` et au chargement de `telemetry.json` — exclut les capteurs non connectés
+
 ## [0.15.0] — 2026-09-16
 
 ### Ajouté
