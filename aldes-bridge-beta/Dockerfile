@@ -1,6 +1,6 @@
 # Stage 1 : build du frontend React depuis le repo principal (tag beta)
 FROM node:20-alpine AS web
-ARG CACHEBUST=v0.17.0-beta1
+ARG CACHEBUST=v0.17.0-beta2
 RUN echo "Cache bust: $CACHEBUST" && date
 RUN apk add --no-cache git
 RUN git clone --depth 1 --branch feature/dashboard-poc https://github.com/saniho/aldes-bridge.git /src
