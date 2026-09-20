@@ -4,6 +4,13 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.18.0-beta1] — 2026-09-20
+
+### Ajouté
+- **Frontend** : contrôle de présence (NpiH) avec boutons +/- dans le dashboard
+- **Backend** : commande `changePeople` (MQTT auto-discovery + handler HA)
+- **Backend** : topic `set/people` ajouté à la souscription MQTT
+
 ## [0.16.0-beta3] — 2026-09-17
 
 ### Corrigé
