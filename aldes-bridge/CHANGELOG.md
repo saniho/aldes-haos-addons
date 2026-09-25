@@ -4,6 +4,17 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.19.0] — 2026-09-25
+
+### Changé
+- **Addon** : migration vers `addon_config:rw` — données persistées dans un dossier isolé par addon (`/addon_configs/aldes-bridge/`), inclus automatiquement dans les backups HA
+- **Addon** : ajout de `homeassistant_config:rw` en montage temporaire pour la migration automatique des données depuis l'ancien emplacement
+- **Addon** : migration automatique au premier démarrage — les fichiers telemetry, history, config, profile et consignes sont copiés depuis `/homeassistant/aldes/` vers `/config/aldes/`
+
+### Corrigé
+- **Addon** : retrait du champ `codenotary` (champ déprécié ignoré)
+- **Addon** : retrait de l'architecture `armv7` (plus supportée par HA Supervisor)
+
 ## [0.18.5] — 2026-09-25
 
 ### Corrigé

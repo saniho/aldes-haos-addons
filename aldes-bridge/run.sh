@@ -1,4 +1,25 @@
 #!/bin/bash
+
+# --- Migration addon_config ---
+# Lors du passage de map config → addon_config, les données existent encore
+# dans /homeassistant/aldes/ (monté via homeassistant_config) mais /config/aldes/
+# (monté via addon_config) est vide. On copie automatiquement au 1er démarrage.
+OLD_DIR="/homeassistant/aldes"
+NEW_DIR="/config/aldes"
+MIGRATE_FLAG="$NEW_DIR/.migrated_from_ha"
+
+if [ -d "$OLD_DIR" ] && [ ! -f "$MIGRATE_FLAG" ]; then
+  if [ ! -d "$NEW_DIR" ] || [ -z "$(ls -A "$NEW_DIR" 2>/dev/null)" ]; then
+    echo "[run.sh] Migration: copie des données depuis $OLD_DIR vers $NEW_DIR"
+    mkdir -p "$NEW_DIR"
+    cp -a "$OLD_DIR"/. "$NEW_DIR"/ 2>/dev/null || true
+    touch "$MIGRATE_FLAG"
+    echo "[run.sh] Migration terminée"
+  else
+    touch "$MIGRATE_FLAG"
+  fi
+fi
+
 MQTT_PORT=18883
 WEB_PORT=8080
 BOX_IP=""
