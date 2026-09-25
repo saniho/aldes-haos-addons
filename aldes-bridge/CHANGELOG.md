@@ -11,6 +11,16 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 - **Addon** : retrait de l'architecture `armv7` (plus supportée par HA Supervisor)
 - **Addon** : suppression du champ `codenotary` (champ déprécié ignoré)
 
+## [0.18.0] — 2026-09-20
+
+### Ajouté
+- **Frontend** : contrôle de présence (NpiH) avec boutons +/- dans le dashboard
+- **Backend** : commande `changePeople` (MQTT auto-discovery + handler HA)
+- **Backend** : topic `set/people` ajouté à la souscription MQTT
+
+### Changé
+- Versions 0.18.1 à 0.18.3 : rebuilds successifs (pas de changements fonctionnels)
+
 ## [0.16.0] — 2026-09-17
 
 ### Ajouté
