@@ -4,6 +4,11 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.18.5] — 2026-09-25
+
+### Corrigé
+- **Addon** : retour à `map: config:rw` — le montage `homeassistant_config` est ignoré silencieusement par les versions anciennes du Superviseur, causant une perte de données (telemetry, history, config) au redémarrage
+
 ## [0.18.4] — 2026-09-25
 
 ### Corrigé

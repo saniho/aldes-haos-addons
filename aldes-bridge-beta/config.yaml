@@ -20,7 +20,7 @@ privileged:
 ports:
   "18883/tcp": 18883
 map:
-  - homeassistant_config:rw
+  - config:rw
 options:
   mqtt_port: 18883
   box_ip: ""
