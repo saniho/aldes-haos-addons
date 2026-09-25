@@ -1,6 +1,6 @@
 ---
 name: Aldes Bridge
-version: "0.18.5"
+version: "0.19.0"
 slug: aldes-bridge
 description: Bridge MQTT/TLS pour Aldes T.ONE AquaAir — auto-discovery Home Assistant
 url: https://github.com/saniho/aldes-bridge
@@ -20,7 +20,8 @@ privileged:
 ports:
   "18883/tcp": 18883
 map:
-  - config:rw
+  - addon_config:rw
+  - homeassistant_config:rw
 options:
   mqtt_port: 18883
   box_ip: ""
