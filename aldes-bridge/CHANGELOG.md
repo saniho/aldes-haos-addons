@@ -4,6 +4,13 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.18.4] — 2026-09-25
+
+### Corrigé
+- **Addon** : remplacement `map: config` par `map: homeassistant_config` (option dépréciée HA Supervisor)
+- **Addon** : retrait de l'architecture `armv7` (plus supportée par HA Supervisor)
+- **Addon** : suppression du champ `codenotary` (champ déprécié ignoré)
+
 ## [0.16.0] — 2026-09-17
 
 ### Ajouté
