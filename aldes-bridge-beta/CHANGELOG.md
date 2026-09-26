@@ -10,6 +10,7 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 - **Frontend** : `Defr` est l'état du dégivrage (0/1) et non un défaut — la bannière d'alerte du dashboard ne se déclenche plus que sur `HPC` et le panneau santé affiche `Inactif` / `Actif` / `Inconnu` au lieu de `ALERTE` (#60)
 
 ### Changé
+- **Version** : format de version beta unique `0.19.1-beta1` (le backend affichait `0.19.1.beta1` et l'UI `0.19.1-beta.1`)
 - **Frontend** : libellé `Defr` → « Dégivrage (état) » dans le profil device et l'historique
 - **Docs** : sémantique `Defr` et bannière d'alerte du dashboard documentées
 - **Build** : la beta est construite depuis la branche `fix/defr-state` (elle pointait encore sur `feature/issue-20-change-people`, déjà mergée)
