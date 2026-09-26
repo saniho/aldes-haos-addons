@@ -6,7 +6,6 @@ RUN apk add --no-cache git
 RUN git clone --depth 1 --branch fix/defr-state https://github.com/saniho/aldes-bridge.git /src
 WORKDIR /src/web
 RUN npm ci --no-audit --no-fund && npm run build
-RUN node -e "const p=require('/src/web/package.json'); require('fs').writeFileSync('/src/web/dist/version.json', JSON.stringify({version:p.version}))"
 
 # Stage 2 : runtime python
 FROM python:3.11-slim

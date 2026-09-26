@@ -7,6 +7,8 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 ## [0.19.1-beta1] — 2026-09-26
 
 ### Corrigé
+- **Build** : `dist/version.json` n'est plus réécrit avec la clé `version` (le build Vite écrit déjà la clé `ui`) — le menu burger n'affichait plus « UI vdev »
+- **Logs** : la bannière de démarrage affiche un seul préfixe `v` par version (`Add-on vv0.19.1-beta1`) et résout la version UI réelle
 - **Frontend** : `Defr` est l'état du dégivrage (0/1) et non un défaut — la bannière d'alerte du dashboard ne se déclenche plus que sur `HPC` et le panneau santé affiche `Inactif` / `Actif` / `Inconnu` au lieu de `ALERTE` (#60)
 
 ### Changé
