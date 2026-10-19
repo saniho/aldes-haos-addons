@@ -82,6 +82,6 @@ if [ -n "$ha_port" ] && [ "$ha_port" != "1883" ]; then
 fi
 
 # UI version from dist/version.json
-export ALDES_UI_VERSION=$(python3 -c "import json; print(json.load(open('/app/dist/version.json')).get('version','?'))" 2>/dev/null || echo "?")
+export ALDES_UI_VERSION=$(python3 -c "import json; d=json.load(open('/app/dist/version.json')); print(d.get('ui') or d.get('version') or '?')" 2>/dev/null || echo "?")
 
 exec python3 -m server.main --mqtt-port "$MQTT_PORT" --web-port "$WEB_PORT" $MODE_ARG $HA_MQTT $HA_MQTT_HOST_ARG $HA_MQTT_PORT_ARG

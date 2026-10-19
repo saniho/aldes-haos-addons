@@ -15,6 +15,24 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 - **Backend** : bornes `min_temp` / `max_temp` des entités climate HA inversées entre chauffage et climatisation (issue #64) — en mode chauffage, les bornes clim (FMiST/FMaST) étaient appliquées et inversement, ce qui bloquait la consigne sous 22 °C depuis Home Assistant
 - **Backend** : détection du mode air dans `_get_min_max` — l'indice numérique UAM (0..8) était comparé à une lettre, rendant la détection climatisation toujours fausse ; conversion numérique → code lettre (A..I) ajoutée, et détection étendue aux codes G/H/I (Boost, Programmes C/D)
 
+## [0.19.3-beta2] — 2026-10-19
+
+### Corrigé
+- **Tests E2E** : 3 scénarios des modes (basculement, annulation, transitions) alignés sur la barre de statut après le redesign du dashboard — libellé « Mode : » retiré de la `StatusBar` ; ajout d'un `data-testid="status-mode"` et assertions ciblées sur ce testid, suite E2E complète au vert (22/22)
+
+## [0.19.3-beta1] — 2026-10-19
+
+### Corrigé
+- **Build** : `dist/version.json` n'est plus réécrit avec la clé `version` (le build Vite écrit déjà la clé `ui`) — le menu burger n'affichait plus « UI vdev »
+- **Logs** : la bannière de démarrage affiche un seul préfixe `v` par version (`Add-on vv0.19.1-beta1`) et résout la version UI réelle
+- **Frontend** : `Defr` est l'état du dégivrage (0/1) et non un défaut — la bannière d'alerte du dashboard ne se déclenche plus que sur `HPC` et le panneau santé affiche `Inactif` / `Actif` / `Inconnu` au lieu de `ALERTE` (#60)
+
+### Changé
+- **Version** : format de version beta unique `0.19.1-beta1` (le backend affichait `0.19.1.beta1` et l'UI `0.19.1-beta.1`)
+- **Frontend** : libellé `Defr` → « Dégivrage (état) » dans le profil device et l'historique
+- **Docs** : sémantique `Defr` et bannière d'alerte du dashboard documentées
+- **Build** : la beta est construite depuis la branche `fix/defr-state` (elle pointait encore sur `fix/ha-min-max-modes`, déjà mergée)
+
 ## [0.18.0-beta1] — 2026-09-20
 
 ### Ajouté
