@@ -26,7 +26,7 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 - **Version** : format de version beta unique `0.19.1-beta1` (le backend affichait `0.19.1.beta1` et l'UI `0.19.1-beta.1`)
 - **Frontend** : libellé `Defr` → « Dégivrage (état) » dans le profil device et l'historique
 - **Docs** : sémantique `Defr` et bannière d'alerte du dashboard documentées
-- **Build** : la beta est construite depuis la branche `fix/defr-state` (elle pointait encore sur `feature/issue-20-change-people`, déjà mergée)
+- **Build** : la beta est construite depuis la branche `fix/defr-state` (elle pointait encore sur `fix/ha-min-max-modes`, déjà mergée)
 
 ## [0.18.0-beta1] — 2026-09-20
 

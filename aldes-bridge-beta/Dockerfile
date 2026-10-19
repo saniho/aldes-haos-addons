@@ -3,7 +3,7 @@ FROM node:20-alpine AS web
 ARG CACHEBUST=v0.19.3-beta1
 RUN echo "Cache bust: $CACHEBUST" && date
 RUN apk add --no-cache git
-RUN git clone --depth 1 --branch fix/ha-min-max-modes https://github.com/saniho/aldes-bridge.git /src
+RUN git clone --depth 1 --branch fix/defr-state https://github.com/saniho/aldes-bridge.git /src
 WORKDIR /src/web
 RUN npm ci --no-audit --no-fund && npm run build
 
