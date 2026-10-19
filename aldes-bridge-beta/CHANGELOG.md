@@ -4,6 +4,12 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.19.2-beta1] — 2026-10-18
+
+### Corrigé
+- **Backend** : bornes `min_temp` / `max_temp` des entités climate HA inversées entre chauffage et climatisation (issue #64) — en mode chauffage, les bornes clim (FMiST/FMaST) étaient appliquées et inversement, ce qui bloquait la consigne sous 22 °C depuis Home Assistant
+- **Backend** : détection du mode air dans `_get_min_max` — l'indice numérique UAM (0..8) était comparé à une lettre, rendant la détection climatisation toujours fausse ; conversion numérique → code lettre (A..I) ajoutée, et détection étendue aux codes G/H/I (Boost, Programmes C/D)
+
 ## [0.18.0-beta1] — 2026-09-20
 
 ### Ajouté
