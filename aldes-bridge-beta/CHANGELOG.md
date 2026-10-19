@@ -4,6 +4,11 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.19.2-beta2] — 2026-10-19
+
+### Corrigé
+- **Backend** : remplacement de `app.extra` par `app.state` dans l'API FastAPI — `app.extra` n'existe pas dans les versions de Starlette embarquées dans l'image Docker de l'addon, ce qui provoquait un crash au démarrage (`AttributeError: 'FastAPI' object has no attribute 'extra'`)
+
 ## [0.19.2-beta1] — 2026-10-18
 
 ### Corrigé
