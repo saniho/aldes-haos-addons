@@ -1,0 +1,40 @@
+#include <tunables/global>
+
+profile aldes-bridge flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+
+  file,
+  signal,
+  network,
+  network netlink raw,
+
+  capability net_admin,
+  capability net_raw,
+  capability net_bind_service,
+  capability dac_override,
+  capability setuid,
+  capability setgid,
+  capability chown,
+  capability fowner,
+  capability kill,
+
+  /app/** mrwlix,
+  /data/** rw,
+  /config/** rw,
+  /homeassistant/** rw,
+  /tmp/** rw,
+  /run/** rw,
+
+  /sbin/iptables Ux,
+  /usr/sbin/iptables Ux,
+  /sbin/xtables* Ux,
+  /usr/sbin/xtables* Ux,
+  /sbin/nft Ux,
+  /usr/sbin/nft Ux,
+  /run/xtables.lock rwk,
+  /run/nftables* rwk,
+
+  deny /etc/shadow r,
+  deny /root/** rwx,
+}

@@ -4,6 +4,17 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.19.3-beta3] — 2026-10-19
+
+### Ajouté
+- **Add-on** : profil AppArmor `apparmor.txt` — le Supervisor charge le profil au démarrage de l'add-on (+1 sur la note de sécurité)
+
+### Changé
+- **Add-on** : `hassio_role: manager` retiré du `config.yaml` — seul l'appel en lecture `GET /services/mqtt` (auto-découverte du broker HA) était utilisé, accessible avec le rôle par défaut (+1 sur la note de sécurité)
+
+### Notes
+- Note de sécurité de l'add-on : 4 → 6 (sur 8). `host_network` et `privileged: NET_ADMIN` sont conservés volontairement (remplacement réseau iptables 8883 → 18883 indispensable au fonctionnement)
+
 ## [0.19.2-beta2] — 2026-10-19
 
 ### Corrigé

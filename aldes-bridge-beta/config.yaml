@@ -1,6 +1,6 @@
 ---
 name: Aldes Bridge Beta
-version: "0.19.3-beta2"
+version: "0.19.3-beta3"
 slug: aldes-bridge-beta
 description: Bridge MQTT/TLS pour Aldes T.ONE AquaAir — version beta avec auto-discovery HA
 url: https://github.com/saniho/aldes-bridge
@@ -10,7 +10,6 @@ arch:
   - aarch64
 init: false
 host_network: true
-hassio_role: "manager"
 ingress: true
 ingress_port: 8080
 panel_icon: mdi:heat-pump
