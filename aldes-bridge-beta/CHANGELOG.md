@@ -4,6 +4,14 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.19.4-beta1] — 2026-10-20
+
+### Corrigé
+- **Backend** : entité HA « Nombre de personnes » — `state/people` publie désormais le nombre réel (2–6) au lieu de l'index `NpiH` brut (0–4), et la commande reçue de HA est reconvertie en index (`valeur − 2`, clamp 0–4) avant `changePeople` (issue #66)
+
+### Changé
+- **Backend** : découverte MQTT `number` `aldes_people` bornée `min: 2` / `max: 6` — les automations HA qui lisaient la plage 0–4 sont à ajuster
+
 ## [0.19.2-beta2] — 2026-10-19
 
 ### Corrigé
