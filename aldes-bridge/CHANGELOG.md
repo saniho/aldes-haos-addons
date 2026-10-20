@@ -4,6 +4,15 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.19.3] — 2026-10-20
+
+### Corrigé
+- **Frontend** : `Defr` traité comme un état (via `f_state`) et non comme une alerte dans le panneau Santé
+- **Backend** : cohérence des versions — tests vérifiant que backend, UI et config add-on portent la même version, préfixe `v` unique dans la bannière de démarrage
+
+### Ajouté
+- **Tests** : scénarios e2e du mode alignés sur la barre de statut post-redesign, et nouveau scénario `defr-state.feature`
+
 ## [0.19.2] — 2026-10-19
 
 ### Corrigé
