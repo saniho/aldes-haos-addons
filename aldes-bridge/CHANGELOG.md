@@ -4,6 +4,14 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.20.0] — 2026-10-21
+
+### Corrigé
+- **Backend** : résolution du preset ambigu « Confort » depuis HA — le label existe à la fois pour le chauffage (B) et la climatisation (F) ; la recherche se fait désormais dans la famille du mode HVAC courant (`heat` → B, `cool` → F) au lieu de toujours résoudre en F (issue #67)
+
+### Changé
+- **Backend** : les `preset_modes` publiés sur l'entité climate HA sont filtrés selon la famille active (issue #67) — mode `cool` (F-I) → presets clim uniquement (`Off, Confort, Boost, Programme C, Programme D`), mode `heat` (B-E) → presets chauffage uniquement (`Off, Confort, Éco, Programme A, Programme B`), mode `off` (A) → union des deux. La discovery est republiée automatiquement à chaque changement de mode
+
 ## [0.19.4] — 2026-10-20
 
 ### Corrigé
