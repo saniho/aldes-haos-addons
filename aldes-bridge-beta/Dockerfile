@@ -1,9 +1,9 @@
 # Stage 1 : build du frontend React depuis le repo principal (tag beta)
 FROM node:20-alpine AS web
-ARG CACHEBUST=v0.19.4-beta1
+ARG CACHEBUST=v0.20.0-beta1
 RUN echo "Cache bust: $CACHEBUST" && date
 RUN apk add --no-cache git
-RUN git clone --depth 1 --branch fix/ha-people-count https://github.com/saniho/aldes-bridge.git /src
+RUN git clone --depth 1 --branch feature/ha-preset-famille https://github.com/saniho/aldes-bridge.git /src
 WORKDIR /src/web
 RUN npm ci --no-audit --no-fund && npm run build
 
@@ -12,7 +12,7 @@ FROM python:3.11-slim
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV ALDES_WEB_DIR=/app/dist
-ENV ALDES_ADDON_VERSION=v0.19.4-beta1
+ENV ALDES_ADDON_VERSION=v0.20.0-beta1
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     iptables \
