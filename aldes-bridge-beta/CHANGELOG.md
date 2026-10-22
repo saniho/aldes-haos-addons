@@ -4,6 +4,12 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.21.0-beta1] — 2026-10-22
+
+### Ajouté
+- **Backend** : 3 capteurs énergie kWh en auto-discovery HA (issue #62) — `Consommation ECS`, `Consommation Chauffage C`, `Consommation Chauffage H` avec `device_class: energy` et `state_class: total_increasing`
+- **Backend** : agrégation des compteurs par zone (`CoE1..12`, `CoC1..12`, `CoH1..12`) en totaux publiés sur `aldes/state/energy/*`
+
 ## [0.20.0-beta1] — 2026-10-21
 
 ### Corrigé
