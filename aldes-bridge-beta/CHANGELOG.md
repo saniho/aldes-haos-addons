@@ -4,6 +4,11 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.21.0-beta2] — 2026-10-22
+
+### Changé
+- **Build** : le Dockerfile beta clone la branche `feature/energy-sensors` (les capteurs énergie ne sont pas encore sur `main`)
+
 ## [0.21.0-beta1] — 2026-10-22
 
 ### Ajouté
