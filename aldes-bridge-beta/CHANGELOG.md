@@ -4,6 +4,14 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.21.0-beta3] — 2026-10-22
+
+### Corrigé
+- **Backend** : fausses remises à zéro des 3 capteurs énergie kWh — un payload Aldes partiel (sous-ensemble des compteurs `CoE/CoC/CoH`) publiait un **sous-total** plus bas que le précédent ; HA (`state_class: total_increasing`) l'interprétait comme un reset du compteur et ajoutait la valeur aux statistiques (jusqu'à ×4 le total réel après 2 redémarrages). Le bridge n'publie désormais que si les **12 compteurs** de la famille sont présents dans le payload, et ignore tout total inférieur au dernier publié
+
+### Changé
+- **Build** : le Dockerfile beta clone la branche `fix/energy-monotonic`
+
 ## [0.21.0-beta2] — 2026-10-22
 
 ### Changé
