@@ -4,6 +4,11 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.21.0-beta6] — 2026-11-01
+
+### Corrigé
+- **Découverte MQTT** : renommage du capteur `CoC` en **« Consommation Climatisation »** (au lieu de « Consommation Chauffage C ») — `CoC` mesure la **climatisation**, pas le chauffage — et icône `mdi:snowflake` au lieu de `mdi:fire` (issue #78, section Divers). L'`entity_id` existant (`sensor.aldes_t_one_consommation_chauffage_c`) est conservé, seul le nom affiché change
+
 ## [0.21.0-beta5] — 2026-11-01
 
 ### Corrigé
