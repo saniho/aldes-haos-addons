@@ -4,6 +4,21 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.21.0-beta5] — 2026-11-01
+
+### Corrigé
+- **Backend** : compteurs `Co*` en **fenêtre glissante 12 mois** — au 1er du mois, le slot du mois entrant remplace celui sortant, ce qui fait **baisser** la somme brute. Le garde-fou monotone bloquait alors la publication (capteur figé pendant des semaines), et un redémarrage publiait la somme basse → HA comptait une remise à zéro fantôme. Le total est désormais **un total à vie** : la valeur du mois sortant est capitalisée dans un offset persistant (`logs/energy_totals.json`), ce qui le rend monotone par construction et survivant aux redémarrages (issue #78)
+
+### Ajouté
+- **Backend** : persistance des totaux d'energie (`--energy-file` / `ALDES_ENERGY_FILE`, défaut `logs/energy_totals.json`), sur le même modèle que `mode_file` / `consigne_file`
+
+### Migration
+- Le rollover du 01/11/2026 est **déjà passé** : pour éviter une chute unique au premier démarrage, déposer `logs/energy_totals.json` avec les offsets du mois sortant :
+  ```json
+  {"energy_heating_h": {"slots": null, "offset": 102.0}, "energy_ecs": {"slots": null, "offset": 18.0}, "energy_heating_c": {"slots": null, "offset": 0.0}}
+  ```
+  Sans ce fichier, le premier publish émettra la somme brute post-rollover (817→716, 414→396).
+
 ## [0.21.0-beta4] — 2026-10-22
 
 ### Corrigé
