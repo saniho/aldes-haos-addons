@@ -18,11 +18,13 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 - **Backend** : persistance des totaux d'energie (`--energy-file` / `ALDES_ENERGY_FILE`, défaut `logs/energy_totals.json`), sur le même modèle que `mode_file` / `consigne_file`
 
 ### Migration
-- Le rollover du 01/11/2026 est **déjà passé** : pour éviter une chute unique au premier démarrage, déposer `energy_totals.json` (dans l'add-on : `/config/aldes/energy_totals.json`) avec les offsets du mois sortant :
-  ```json
-  {"energy_heating_h": {"slots": null, "offset": 102.0}, "energy_ecs": {"slots": null, "offset": 18.0}, "energy_heating_c": {"slots": null, "offset": 0.0}}
-  ```
-  Sans ce fichier, le premier publish émettra la somme brute post-rollover (817→716, 414→396).
+- Le rollover du 01/11/2026 est **déjà passé** : au premier démarrage, sans état connu, le bridge publie la somme brute post-rollover (817→716, 414→396). Deux façons de gérer cette chute unique :
+  1. **Éviter la chute** — déposer `energy_totals.json` (dans l'add-on : `/config/aldes/energy_totals.json`, hôte : `/addon_configs/<slug>/aldes/`) **avant** de démarrer, avec les offsets du mois sortant :
+     ```json
+     {"energy_heating_h": {"slots": null, "offset": 102.0}, "energy_ecs": {"slots": null, "offset": 18.0}, "energy_heating_c": {"slots": null, "offset": 0.0}}
+     ```
+     Résultat : 818 / 414 / 428, sans saut. À noter : ce dossier n'est **pas** celui de la config HA — File Editor / Studio Code n'y voient pas ce fichier, il faut le Terminal (`/app_configs/<slug>/aldes/` ou `/addon_configs/<slug>/aldes/`).
+  2. **Accepter la chute** — démarrer sans fichier, puis **réinitialiser les 3 statistiques** dans Outils développeur → Statistiques **après** la première remontée (quand les capteurs affichent la somme basse). Reset avant la chute = le fantôme est recompté. Depuis, les totaux sont monotones par construction, plus aucune remise à zéro.
 
 ## [0.21.0-beta4] — 2026-10-22
 
