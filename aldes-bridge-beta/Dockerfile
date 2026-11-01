@@ -42,5 +42,6 @@ ENV ALDES_TELEMETRY_FILE=/config/aldes/telemetry.json
 ENV ALDES_HISTORY_FILE=/config/aldes/history.db
 ENV ALDES_PROFILE_FILE=/config/aldes/profile.json
 ENV ALDES_CONSIGNE_FILE=/config/aldes/consigne.json
+ENV ALDES_ENERGY_FILE=/config/aldes/energy_totals.json
 
 ENTRYPOINT ["/run.sh"]

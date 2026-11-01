@@ -13,7 +13,7 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 - **Backend** : persistance des totaux d'energie (`--energy-file` / `ALDES_ENERGY_FILE`, défaut `logs/energy_totals.json`), sur le même modèle que `mode_file` / `consigne_file`
 
 ### Migration
-- Le rollover du 01/11/2026 est **déjà passé** : pour éviter une chute unique au premier démarrage, déposer `logs/energy_totals.json` avec les offsets du mois sortant :
+- Le rollover du 01/11/2026 est **déjà passé** : pour éviter une chute unique au premier démarrage, déposer `energy_totals.json` (dans l'add-on : `/config/aldes/energy_totals.json`) avec les offsets du mois sortant :
   ```json
   {"energy_heating_h": {"slots": null, "offset": 102.0}, "energy_ecs": {"slots": null, "offset": 18.0}, "energy_heating_c": {"slots": null, "offset": 0.0}}
   ```
