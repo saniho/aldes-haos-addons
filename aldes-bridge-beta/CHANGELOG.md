@@ -4,6 +4,15 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.21.0-beta7] — 2026-11-01
+
+### Ajouté
+- **Reseed depuis le broker MQTT** : à chaque démarrage, le bridge s'abonne à `aldes/state/energy/+` et lit les 3 messages **retenus** de ses propres capteurs (les publications se font avec `retain=True`, et le Mosquitto de l'add-on a la persistance activée). Ces valeurs servent de **plancher** pour reconstruire l'offset : si `energy_totals.json` a été perdu (réinstallation de l'add-on, restauration d'un backup ancien), le total repart de la dernière valeur vue par HA au lieu de retomber à la somme brute. La publication des compteurs reste bloquée tant que le reseed n'est pas terminé (3/3 retenus, ou délai de 5 s écoulé) — sinon on publierait une somme basse avant d'avoir lu le plancher.
+- **Soupape de reset usine** : si la PAC Aldes est remise à zéro (les 12 compteurs d'une famille tombent à zéro sur 3 télémesures consécutives), l'offset est purgé et le capteur repart de la somme brute. Sans cela, un reset usine laisserait un offset fantôme qui figerait le total à vie.
+
+### Connu
+- **Double wipe résiduel** : si l'add-on Aldes **et** le Mosquitto sont réinstallés ensemble (perte des retenues), le reseed n'a rien à lire et on retombe sur la somme brute — une remise à zéro manuelle dans Outils développeur → Statistiques reste nécessaire dans ce cas de figure. C'est le seul scénario non couvert ; il est documenté plutôt que traité par une dépendance à l'API HA.
+
 ## [0.21.0-beta6] — 2026-11-01
 
 ### Corrigé
