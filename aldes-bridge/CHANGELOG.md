@@ -4,6 +4,26 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.21.0] — 2026-11-01
+
+### Ajouté
+- **Backend** : 3 nouveaux capteurs HA — « Consommation ECS », « Consommation Chauffage H » et « Consommation Climatisation » (`state_class: total_increasing`, unité kWh), alimentés par les compteurs `CoE*` / `CoH*` / `CoC*` de la télémétrie Aldes (issue #78)
+- **Backend** : persistance des totaux d'énergie (`--energy-file` / `ALDES_ENERGY_FILE`, défaut `logs/energy_totals.json`), sur le même modèle que `mode_file` / `consigne_file`
+- **Backend** : **reseeding depuis les messages retenus du broker** — à chaque démarrage, le bridge s'abonne à `aldes/state/energy/+`, lit les 3 valeurs retenues de ses propres capteurs (Mosquitto a la persistance activée) et s'en sert de plancher pour reconstruire l'offset si `energy_totals.json` a été perdu (réinstallation de l'add-on, restauration d'un backup ancien). La publication des compteurs reste bloquée tant que le reseed n'est pas terminé (3/3 retenus, ou délai de 5 s écoulé)
+- **Backend** : **soupape de reset usine** — si les 12 compteurs d'une famille tombent à zéro sur 3 télémesures consécutives, l'offset est purgé et le capteur repart de la somme brute (un rollover de mois ne vide qu'un seul slot)
+
+### Corrigé
+- **Backend** : fausses remises à zéro des 3 capteurs énergie — un payload Aldes partiel publiait un sous-total plus bas que le précédent et HA l'interprétait comme un reset du compteur. Le bridge ne publie désormais que si les **12 compteurs** de la famille sont présents
+- **Backend** : compteurs `Co*` en **fenêtre glissante 12 mois** — au 1er du mois, le slot du mois entrant remplace celui sortant et la somme brute baisse. Le total est désormais **un total à vie** : la valeur du mois sortant est capitalisée dans un offset persistant, ce qui le rend monotone par construction et survivant aux redémarrages (issue #78)
+
+### Changé
+- **Découverte MQTT** : `CoC` affiché en **« Consommation Climatisation »** (et non « Consommation Chauffage C ») avec l'icône `mdi:snowflake` — `CoC` mesure la **climatisation**, pas le chauffage. L'`entity_id` existant (`sensor.aldes_t_one_consommation_chauffage_c`) est conservé, seul le nom affiché change
+
+### Migration
+- Si l'add-on est réinstallé **sans** Mosquitto, le reseed lit les messages retenus et aucune intervention n'est nécessaire.
+- Si **les deux** sont réinstallés (double wipe), le reseed n'a rien à lire : démarrer, attendre la première remontée, puis **réinitialiser les 3 statistiques** dans Outils développeur → Statistiques. Reset avant la chute = le fantôme est recompté.
+- Depuis, les totaux sont monotones par construction, plus aucune remise à zéro.
+
 ## [0.20.0] — 2026-10-21
 
 ### Corrigé

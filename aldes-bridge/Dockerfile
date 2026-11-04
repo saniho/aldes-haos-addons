@@ -1,6 +1,6 @@
 # Stage 1 : build du frontend React depuis le repo principal (tag stable)
 FROM node:20-alpine AS web
-ARG CACHEBUST=v0.20.0
+ARG CACHEBUST=v0.21.0
 RUN echo "Cache bust: $CACHEBUST" && date
 RUN apk add --no-cache git
 RUN git clone --depth 1 --branch main https://github.com/saniho/aldes-bridge.git /src
@@ -12,7 +12,7 @@ FROM python:3.11-slim
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV ALDES_WEB_DIR=/app/dist
-ENV ALDES_ADDON_VERSION=v0.20.0
+ENV ALDES_ADDON_VERSION=v0.21.0
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     iptables \
@@ -43,5 +43,6 @@ ENV ALDES_TELEMETRY_FILE=/config/aldes/telemetry.json
 ENV ALDES_HISTORY_FILE=/config/aldes/history.db
 ENV ALDES_PROFILE_FILE=/config/aldes/profile.json
 ENV ALDES_CONSIGNE_FILE=/config/aldes/consigne.json
+ENV ALDES_ENERGY_FILE=/config/aldes/energy_totals.json
 
 ENTRYPOINT ["/run.sh"]
