@@ -4,6 +4,22 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.22.0-beta1] — 2026-11-04
+
+### Ajouté
+- **Profil VMC InspirAIR Home S** (`profiles/inspirair-home-s.yaml`, `type: vmc`) : pour un profil de type `vmc`, la discovery HA publie un select « Mode » (Daily / Holidays / Guest / Boost / Air Prog, codes `changeMode` V→Z) et les sensors du profil, à la place des entités climate / water_heater du T.ONE. Les champs bruts non documentés sont exposés en `entity_category: diagnostic` ; les unités des sensors sont déduites des valeurs observées (PR #63).
+- **Mode Holidays (W)** : envoie la fenêtre UTC attendue par la machine (`ha_discovery.holiday_duration_hours`, 24 h par défaut) — sans elle, la machine ignore la commande.
+- `AGENTS.md` décrit maintenant l'équipement selon le `type` du profil (`pac` ou `vmc`).
+
+### Corrigé
+- **Dry-run ignoré à l'exécution** : `state.config` (défaut `ha_mqtt_dry_run: False`) écrasait le dry-run résolu au démarrage — les commandes HA partaient vers la box même avec `HA_MQTT_DRY_RUN=true`. Le client lit désormais `self.dry_run`, que le toggle des réglages met à jour.
+- **Topic de commande HA** : les commandes partaient sur `devices/aldes_bridge/messages/devicebound` au lieu du `client_id` de la box connectée (`devices/<client_id>/...`).
+- **Profil par défaut** : il dépendait de l'ordre alphabétique des fichiers — ajouter un profil changeait le profil des installations existantes. Le défaut est maintenant `tone-aquaair`.
+- **Identifiants MQTT Supervisor** : la réponse de `services/mqtt` contenait `username`/`password`, ignorés jusqu'ici. Ils sont maintenant utilisés, un broker configuré explicitement restant prioritaire.
+- **Session jamais redescendue** : `shutdown()` fermait le fd depuis un autre thread pendant une lecture SSL, qui restait bloquée jusqu'au timeout keepalive. `shutdown(SHUT_RDWR)` réveille le lecteur et c'est le thread propriétaire qui ferme le socket.
+- **TLS 1.3 et relais** : proxy/listen lisaient et écrivaient le même `SSLSocket` depuis deux threads — en TLS 1.3, les messages post-handshake faisaient perdre des écritures (le CONNECT relayé n'arrivait pas au pair). Le TLS est plafonné à 1.2, négocié déjà par Azure IoT Hub.
+- **`air_mode_field`** : le champ déclaré dans `telemetry` d'un profil (`current_mode`, `UAM`, `ConVe`…) est maintenant lu par la télémétrie VMC et par le mode air au lieu d'être codé en dur — un profil qui déclare un autre champ (issue #76) fonctionne.
+
 ## [0.21.0-beta7] — 2026-11-01
 
 ### Ajouté
