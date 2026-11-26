@@ -4,6 +4,15 @@ Toutes les versions notables de Aldes Bridge Add-on.
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.23.0-beta1] — 2026-11-26
+
+### Ajouté
+- **Plages de plausibilité des zones déclarées par le profil** : nouvelles clés `telemetry.zone_temp_min`, `zone_temp_max`, `zone_zero_eps` et `zone_setpoint_max` (profil `tone-aquaair` : -30 / +60 °C, seuil 0,5 °C, consigne max 40 °C). Une température hors plage ou quasi nulle, ou une consigne aberrante, est ignorée par la discovery HA comme par l'API de rejeu.
+
+### Corrigé
+- **Zones fantômes dans Home Assistant** (issue #82) : une trame de télémétrie aberrante (MT5–MT9 à 107 °C, -324 °C…) créait des entités `climate` retenues pendant une trame, modifiables depuis HA. Une zone n'est désormais active que si sa température mesurée est plausible et positive, ou si sa consigne est plausible — une température négative sans consigne (MT5 = -15,36 / UsC5 = 0) ne suffit plus.
+- **Log « reset usine » répété** (issue #82) : un épisode de 12 compteurs à zéro n'est traité qu'une fois. La climatisation à 0 en hiver ne reloggue plus le reset à chaque payload, et aucun reset n'est appliqué quand l'offset et le total sont déjà nuls.
+
 ## [0.22.0-beta1] — 2026-11-04
 
 ### Ajouté
