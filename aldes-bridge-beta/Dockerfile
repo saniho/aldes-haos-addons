@@ -1,9 +1,9 @@
-# Stage 1 : build du frontend React depuis le repo principal (tag beta)
+# Stage 1 : build du frontend React depuis le repo principal (branche beta)
 FROM node:20-alpine AS web
 ARG CACHEBUST=v0.23.0-beta1
 RUN echo "Cache bust: $CACHEBUST" && date
 RUN apk add --no-cache git
-RUN git clone --depth 1 --branch main https://github.com/saniho/aldes-bridge.git /src
+RUN git clone --depth 1 --branch feature/zone-plausibility https://github.com/saniho/aldes-bridge.git /src
 WORKDIR /src/web
 RUN npm ci --no-audit --no-fund && npm run build
 
